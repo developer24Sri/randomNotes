@@ -1,0 +1,12 @@
+| Feature                          | `<video>` Tag (Native HTML5)       | Video.js (Library)                            |
+|----------------------------------|------------------------------------|-----------------------------------------------|
+| ✅ Basic playback                | ✅ Yes                             | ✅ Yes                                          |
+| 🎛 Customizable UI              | ❌ Limited (requires custom JS/CSS) | ✅ Fully customizable and skinnable            |
+| 📱 Responsive design            | ❌ Manual setup needed              | ✅ Built-in responsive player support          |
+| 🌐 Cross-browser consistency    | ⚠️ Varies slightly across browsers | ✅ Normalized behavior across browsers         |
+| 📺 Streaming (HLS/DASH)         | ❌ Needs MediaSource API or tricks | ✅ With plugins (videojs-http-streaming etc.)  |
+| 🎥 Subtitles/Captions           | ✅ Basic support                    | ✅ Extended support + plugins                  |
+| 📊 Analytics support            | ❌ Not built-in                    | ✅ Available through plugins                   |
+| 💬 Internationalization (i18n)  | ❌ Manual setup                     | ✅ Built-in language packs                     |
+| 🔌 Plugins (ads, quality selector) | ❌ No plugin system               | ✅ Rich plugin ecosystem                       |
+| 🚀 Quick to set up              | ✅ Extremely easy                  | ⚠️ Slightly more setup (script + init call)    |
