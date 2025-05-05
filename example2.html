@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://vjs.zencdn.net/8.22.0/video-js.css" rel="stylesheet" />
+</head>
+<body>
+  <video
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="640"
+    height="264"
+    poster="MY_VIDEO_POSTER.jpg"
+    data-setup="{}"
+  >
+  <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
+    <source src="MY_VIDEO.webm" type="video/webm" />
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank">
+        supports HTML5 video
+      </a>
+    </p>
+  </video>
+
+  <script src="https://vjs.zencdn.net/8.22.0/video.min.js"></script>
+  <script>
+    // Get the base Plugin class from Video.js
+    const Plugin = videojs.getPlugin('plugin');
+
+    // Define an advanced plugin by extending the base Plugin class
+    class ExamplePlugin extends Plugin {
+      constructor(player, options) {
+        super(player, options);
+
+        // Add a custom CSS class if provided
+        if (options.customClass) {
+          player.addClass(options.customClass);
+        }
+
+        // Listen for the 'playing' event and log a message
+        player.on('playing', () => {
+          videojs.log('Playback started!');
+        });
+
+        // Listen for the 'pause' event and log a message
+        player.on('pause', () => {
+          videojs.log('Playback paused!');
+        });
+      }
+
+      // Optional: cleanup when plugin is disposed
+      dispose() {
+        videojs.log('ExamplePlugin is being disposed');
+        super.dispose();
+      }
+    }
+
+    // Register the plugin with Video.js
+    ExamplePlugin.VERSION = '1.0.0';
+    videojs.registerPlugin('examplePlugin', ExamplePlugin);
+
+    // Initialize Video.js player
+    const player = videojs('my-video');
+
+    // Use the plugin with options
+    player.examplePlugin({ customClass: 'my-custom-style' });
+
+    // Example: control playback to trigger plugin events
+    player.play();
+
+    // Later, dispose the plugin if needed
+    // player.examplePlugin().dispose();
+  </script>
+</body>
+</html>

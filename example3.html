@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Video.js Responsive Examples</title>
+  <link href="https://vjs.zencdn.net/8.22.0/video-js.css" rel="stylesheet" />
+  <style>
+    body {
+      max-width: 800px;
+      margin: 20px auto;
+    }
+    video {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Fluid Responsive Video (vjs-fluid)</h2>
+  <video
+    id="video-fluid"
+    class="video-js vjs-fluid"
+    controls
+    preload="auto"
+    data-setup="{}"
+  >
+    <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
+  </video>
+
+  <h2>Fixed Aspect Ratio 16:9 (vjs-16-9)</h2>
+  <video
+    id="video-16-9"
+    class="video-js vjs-16-9"
+    controls
+    preload="auto"
+    data-setup="{}"
+  >
+    <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
+  </video>
+
+  <h2>Responsive Mode with Breakpoints (JS option)</h2>
+  <video
+    id="video-responsive"
+    class="video-js"
+    controls
+    preload="auto"
+    width="640"
+    height="264"
+  >
+    <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
+  </video>
+
+  <script src="https://vjs.zencdn.net/8.22.0/video.min.js"></script>
+  <script>
+    // Responsive mode with breakpoints
+    const player = videojs('video-responsive', {
+      responsive: true,
+      fluid: true
+    });
+  </script>
+</body>
+</html>
+
+<!-- 
+other than changing color for each we can do,
+Create custom skins/themes	.vjs-custom-skin, .vjs-big-play-button
+Style individual controls (play, volume, fullscreen)	.vjs-play-control, .vjs-volume-menu-button
+Control layout and visibility	.vjs-control-bar, .vjs-hidden
+Responsive sizing and aspect ratios	.vjs-fluid, .vjs-16-9, .vjs-4-3
+Customize focus and hover styles	.vjs-control.vjs-focused, .vjs-control:hover
+-->

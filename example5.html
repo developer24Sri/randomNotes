@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Video.js Custom Speed Button</title>
+  <link href="https://vjs.zencdn.net/8.22.0/video-js.css" rel="stylesheet" />
+  <style>
+    /* Optional: Style your button */
+    .vjs-speed-toggle-button {
+      font-size: 14px;
+      line-height: 1;
+      color: white;
+      cursor: pointer;
+      padding: 0 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <video
+    id="my-video"
+    class="video-js vjs-default-skin"
+    controls
+    preload="auto"
+    width="640"
+    height="264"
+    poster="https://vjs.zencdn.net/v/oceans.png"
+  >
+    <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
+  </video>
+
+  <script src="https://vjs.zencdn.net/8.22.0/video.min.js"></script>
+  <script>
+    // Step 1: Get the base Component and Button classes
+    const Component = videojs.getComponent('Component');
+    const Button = videojs.getComponent('Button');
+
+    // Step 2: Create a new button by extending the Button class
+    class SpeedToggleButton extends Button {
+      constructor(player, options) {
+        super(player, options);
+        this.speed = 1; // start at normal speed
+        this.controlText('Toggle Playback Speed');
+      }
+
+      // Step 3: Create the button element
+      createEl() {
+        return videojs.dom.createEl('button', {
+          className: 'vjs-speed-toggle-button vjs-control vjs-button',
+          innerHTML: '1x',
+          type: 'button',
+          title: 'Toggle Playback Speed'
+        });
+      }
+
+      // Step 4: Handle button clicks
+      handleClick() {
+        this.speed = this.speed === 1 ? 2 : 1;
+        this.player().playbackRate(this.speed);
+        this.el().innerHTML = this.speed + 'x';
+      }
+    }
+
+    // Step 5: Register the component with Video.js
+    videojs.registerComponent('SpeedToggleButton', SpeedToggleButton);
+
+    // Step 6: Initialize the player and add the button to the control bar
+    const player = videojs('my-video');
+
+    // Add the button to the control bar
+    player.ready(() => {
+      player.getChild('controlBar').addChild('SpeedToggleButton', {});
+    });
+  </script>
+
+</body>
+</html>

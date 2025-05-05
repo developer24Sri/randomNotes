@@ -1,0 +1,37 @@
+// Get the base Component class
+const Component = videojs.getComponent('Component');
+
+// Define your custom component by extending Component
+class TitleBar extends Component {
+  constructor(player, options = {}) {
+    super(player, options);
+
+    // If a text option is provided, update the component’s content
+    if (options.text) {
+      this.updateTextContent(options.text);
+    }
+  }
+
+  // Create the DOM element for this component
+  createEl() {
+    return videojs.dom.createEl('div', {
+      className: 'vjs-title-bar',
+      // Set the text content if provided
+      innerHTML: this.options_.text || ''
+    });
+  }
+
+  // Method to update the text content dynamically
+  updateTextContent(text) {
+    this.el().innerHTML = text;
+  }
+}
+
+// Register the component with Video.js
+videojs.registerComponent('TitleBar', TitleBar);
+
+// Initialize the player and add the custom component as a child
+const player = videojs('my-video');
+
+// Add the TitleBar component with some text
+player.addChild('TitleBar', { text: 'Custom Video Title' });

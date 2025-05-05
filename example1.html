@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Video.js Custom Colors</title>
+  <link href="https://vjs.zencdn.net/8.22.0/video-js.css" rel="stylesheet" />
+  <style>
+    /* Change play/pause button icon color */
+    .vjs-play-control .vjs-icon-play,
+    .vjs-play-control.vjs-playing .vjs-icon-pause {
+      color: #e91e63; /* Pink color */
+    }
+
+    /* Change progress bar played portion color */
+    .vjs-play-progress {
+      background-color: #4caf50 !important; /* Green */
+    }
+
+    /* Change progress bar handle (scrubber) color */
+    .vjs-slider-handle {
+      border-color: #4caf50 !important;
+      background-color: #4caf50 !important;
+      box-shadow: 0 0 5px #4caf50;
+    }
+
+    /* Change volume level bar color */
+    .vjs-volume-level {
+      background-color: #2196f3 !important; /* Blue */
+    }
+
+    /* Optional: Change volume slider handle color */
+    .vjs-volume-bar .vjs-slider-handle {
+      border-color: #2196f3 !important;
+      background-color: #2196f3 !important;
+      box-shadow: 0 0 5px #2196f3;
+    }
+  </style>
+</head>
+<body>
+  <video
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="640"
+    height="264"
+    poster="https://vjs.zencdn.net/v/oceans.png"
+  >
+  <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+  </video>
+
+  <script src="https://vjs.zencdn.net/8.22.0/video.min.js"></script>
+
+</body>
+</html>
