@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Grid with Checkboxes</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .controls {
+      margin-bottom: 20px;
+    }
+    .controls label {
+      margin-right: 10px;
+    }
+
+    .parent {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(5, 100px);
+      gap: 8px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .parent > div {
+      background-color: #4CAF50;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .div1 {
+    grid-column: span 3 / span 3;
+    grid-row: span 5 / span 5;
+}
+
+.div2 {
+    grid-row: span 2 / span 2;
+    grid-column-start: 4;
+}
+
+.div3 {
+    grid-row: span 2 / span 2;
+    grid-column-start: 5;
+}
+
+.div4 {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 3;
+    grid-column-start: 4;
+    grid-row-start: 3;
+}
+
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <label><input type="checkbox" id="selectAll" checked /> Select All</label>
+    <label><input type="checkbox" class="toggle-box" value="1" /> Box 1</label>
+    <label><input type="checkbox" class="toggle-box" value="2" /> Box 2</label>
+    <label><input type="checkbox" class="toggle-box" value="3" /> Box 3</label>
+    <label><input type="checkbox" class="toggle-box" value="4" /> Box 4</label>
+  </div>
+
+  <div class="parent" id="grid">
+    <div class="div1" data-box="1">1</div>
+    <div class="div2" data-box="2">2</div>
+    <div class="div3" data-box="3">3</div>
+    <div class="div4" data-box="4">4</div>
+  </div>
+
+  <script>
+    const selectAll = document.getElementById('selectAll');
+    const checkboxes = document.querySelectorAll('.toggle-box');
+    const boxes = document.querySelectorAll('[data-box]');
+    const grid = document.getElementById('grid');
+
+    function resetGridStyles() {
+      boxes.forEach(box => {
+        box.removeAttribute('style');
+      });
+    }
+
+    function applyDynamicLayout(visibleBoxes) {
+      resetGridStyles();
+      const count = visibleBoxes.length;
+
+      if (count === 1) {
+        const box = visibleBoxes[0];
+        box.style.gridColumn = '1 / -1';
+        box.style.gridRow = '1 / -1';
+      } else if (count === 2) {
+        visibleBoxes[0].style.gridColumn = '1 / span 3';
+        visibleBoxes[0].style.gridRow = '1 / -1';
+        visibleBoxes[1].style.gridColumn = '4 / span 2';
+        visibleBoxes[1].style.gridRow = '1 / -1';
+      } else {
+        visibleBoxes.forEach((box, idx) => {
+          box.style.gridColumn = '1 / -1';
+          box.style.gridRow = `${idx * 2 + 1} / span 2`;
+        });
+      }
+    }
+
+    function updateVisibility() {
+      const selected = Array.from(checkboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+
+      const visibleBoxes = [];
+
+      boxes.forEach(box => {
+        const val = box.dataset.box;
+        if (selected.includes(val)) {
+          box.classList.remove('hidden');
+          visibleBoxes.push(box);
+        } else {
+          box.classList.add('hidden');
+        }
+      });
+
+      if (selectAll.checked) {
+        boxes.forEach(box => box.classList.remove('hidden'));
+        resetGridStyles();
+      } else {
+        applyDynamicLayout(visibleBoxes);
+      }
+    }
+
+    selectAll.addEventListener('change', () => {
+      const check = selectAll.checked;
+      if (check) {
+        checkboxes.forEach(cb => cb.checked = false);
+        boxes.forEach(box => box.classList.remove('hidden'));
+        resetGridStyles();
+      } else {
+        boxes.forEach(box => box.classList.add('hidden'));
+      }
+    });
+
+    checkboxes.forEach(cb => {
+      cb.checked = false; // Uncheck initially
+      cb.addEventListener('change', () => {
+        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+        selectAll.checked = allChecked;
+        updateVisibility();
+      });
+    });
+
+    // Final init: selectAll true, others unchecked, boxes visible
+    selectAll.checked = true;
+    checkboxes.forEach(cb => cb.checked = false);
+    boxes.forEach(box => box.classList.remove('hidden'));
+  </script>
+</body>
+</html>
