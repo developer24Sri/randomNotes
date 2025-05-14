@@ -93,7 +93,7 @@
       });
     }
 
-    function applyDynamicLayout(visibleBoxes) {
+     function applyDynamicLayout(visibleBoxes) {
       resetGridStyles();
       const count = visibleBoxes.length;
 
@@ -101,16 +101,22 @@
         const box = visibleBoxes[0];
         box.style.gridColumn = '1 / -1';
         box.style.gridRow = '1 / -1';
+        box.style.height = '100vh';
       } else if (count === 2) {
         visibleBoxes[0].style.gridColumn = '1 / span 3';
         visibleBoxes[0].style.gridRow = '1 / -1';
         visibleBoxes[1].style.gridColumn = '4 / span 2';
         visibleBoxes[1].style.gridRow = '1 / -1';
-      } else {
+        visibleBoxes.forEach(box => box.style.height = 'auto');
+      } else if (count === 3) {
         visibleBoxes.forEach((box, idx) => {
+          const startRow = 1 + idx * 5; // stack with spacing
           box.style.gridColumn = '1 / -1';
-          box.style.gridRow = `${idx * 2 + 1} / span 2`;
-        });
+          box.style.gridRow = `${startRow} / span 5`;
+          box.style.height = '100vh';
+  });
+      } else {
+        visibleBoxes.forEach(box => box.style.height = 'auto');
       }
     }
 
