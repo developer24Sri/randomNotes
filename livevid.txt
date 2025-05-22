@@ -1,0 +1,138 @@
+videoJS live streaming flow:
+Live video capturing via hardwares:
+|
+| -> via RTMP(protocol) as packets
+V
+media server (breakes that packet to segments and create a index file for them)
+|
+V
+stored in HTTP servers or CDN
+|
+V
+player(videoJS) fetches these files over HTTP as needed
+
+over client side:
+1. Fetching the Manifest File
+The player requests the manifest file (.m3u8 for HLS or .mpd for DASH) over HTTP from the server or CDN.
+
+This manifest tells the player what video segments are available, their URLs, bitrates, durations, and codecs.
+
+2. Parsing the Manifest
+The player parses the manifest to understand the available quality levels and segment sequence.
+
+For live streams, the manifest is updated periodically to include new segments as they become available.
+
+3. Requesting Video Segments
+The player downloads video segments (chunks) sequentially via HTTP based on the manifest.
+
+It buffers these segments to ensure smooth playback.
+
+Summary of Live-Specific Controls
+Control/Feature	Description
+LiveDisplay	Displays “Live” badge on the player
+SeekToLive	Button to jump to the live point in the stream
+ProgressControl	Progress bar hidden by default; shown in liveui mode with negative time
+Play/Pause	Standard playback toggle
+Volume Control	Adjust audio volume
+Fullscreen Toggle	Enter/exit fullscreen mode
+Time Tooltips	Show countdown to live edge (negative time)
+
+docs of videoJS I can able to find:
+startTracking() and stopTracking()
+seebalbelEnd()
+seekableStart()
+liveWindow()
+stLiveEdge() and behindLiveEdge()
+liveCurrentTime()
+pastSeekEnd()
+isTracking() and isLive()
+seekToLiveEdge()
+
+ex:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Video.js Live Methods Demo</title>
+  <link href="https://vjs.zencdn.net/8.22.0/video-js.css" rel="stylesheet" />
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    #log { white-space: pre-wrap; background: #f0f0f0; padding: 10px; height: 300px; overflow-y: scroll; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+
+  <h2>Video.js Live Methods Demo</h2>
+  <video
+    id="live-video"
+    class="video-js vjs-default-skin"
+    controls
+    preload="auto"
+    width="640"
+    height="360"
+    data-setup='{"liveui": true}'
+  >
+    <source src="https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8" type="application/x-mpegURL" />
+  </video>
+
+  <h3>Console Log Output:</h3>
+  <div id="log"></div>
+
+  <script src="https://vjs.zencdn.net/8.22.0/video.min.js"></script>
+  <script>
+    const logEl = document.getElementById('log');
+    function log(msg) {
+      console.log(msg);
+      logEl.textContent += msg + '\n';
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    const player = videojs('live-video', { liveui: true });
+
+    player.ready(() => {
+      const liveTracker = player.liveTracker();
+
+      // Start tracking live playback
+      liveTracker.startTracking();
+      log('startTracking() called: Live tracking started.');
+
+      // Log initial values
+      log(`seekableEnd(): ${liveTracker.seekableEnd()}`);
+      log(`seekableStart(): ${liveTracker.seekableStart()}`);
+      log(`liveWindow(): ${liveTracker.liveWindow()}`);
+      log(`atLiveEdge(): ${liveTracker.atLiveEdge()}`);
+      log(`behindLiveEdge(): ${liveTracker.behindLiveEdge()}`);
+      log(`liveCurrentTime(): ${liveTracker.liveCurrentTime()}`);
+      log(`pastSeekEnd(): ${liveTracker.pastSeekEnd()}`);
+      log(`isTracking(): ${liveTracker.isTracking()}`);
+      log(`isLive(): ${liveTracker.isLive()}`);
+
+      // Demonstrate seekToLiveEdge()
+      player.on('seeked', () => {
+        log('User seeked. Calling seekToLiveEdge() to jump to live edge.');
+        liveTracker.seekToLiveEdge();
+      });
+
+      // Stop tracking after 60 seconds (example)
+      setTimeout(() => {
+        liveTracker.stopTracking();
+        log('stopTracking() called: Live tracking stopped.');
+      }, 60000);
+    });
+  </script>
+
+</body>
+</html>
+
+RTMP is created by adobe
+
+Tag/Element	Description
+#EXTM3U	Playlist header identifying the file as HLS playlist
+#EXT-X-STREAM-INF	Variant stream info: bitrate, codecs, resolution, URL
+#EXTINF	Duration of each media segment
+#EXT-X-TARGETDURATION	Max segment duration in playlist
+#EXT-X-MEDIA-SEQUENCE	Sequence number of first segment
+#EXT-X-DISCONTINUITY	Marks discontinuities in stream
+#EXT-X-KEY	Encryption key info for DRM
+#EXT-X-ENDLIST	Indicates no more media segments will be added; used only in VOD, not in live streaming
+Segment URLs	Paths to media segment files (e.g., .ts files)
