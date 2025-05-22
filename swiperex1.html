@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+<style>
+    .ETE__slides {
+        overflow-y: auto;
+    }
+        .swiper {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide {
+      text-align: center;
+      background: #fff;
+      display: flex;
+    }
+
+    .ETE-sliderwrapper{
+        display: flex;
+        width: 80%;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .ETE-sliderwrapper .ETE__leftcont {
+        width: 50%;
+        display: block;
+    }
+
+    .ETE-sliderwrapper .ETE__leftcont .ETE__sliderimg{
+        left: 0;
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .ETE-sliderwrapper .ETE__leftpara {
+        position: absolute;
+        bottom: 10%;
+        left: 10%;
+        color: #fff;
+        text-align: start;
+    }
+
+    .ETE-sliderwrapper .ETE__rightcont {
+        width: 50%;
+        align-content: center;
+    }
+
+    .ETE-sliderwrapper .ETE__rightcont .ETE__blackbox {
+        background-color: #1d1d1d;
+        display: flex;
+        flex-direction: column;
+        padding: 40px 50px;
+    }
+
+    .ETE-sliderwrapper .ETE__rightcont .ETE__blackbox .ETE__toppara {
+        text-align: end;
+        color: #e52a2a;
+        font-family: sans-serif;
+    }
+
+    .ETE-sliderwrapper .ETE__rightcont .ETE__blackbox .ETE__header {
+        display: flex;
+        align-items: center;
+    }
+
+    .ETE-sliderwrapper .ETE__rightcont .ETE__blackbox .ETE__header .ETE__num {
+        color: #e52a2a;
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    .ETE-sliderwrapper .ETE__rightcont .ETE__blackbox .ETE__header .ETE__para {
+        font-size: 20px;
+        color: white;
+        text-align: start;
+        }
+
+        .ETE-sliderwrapper .ETE__rightcont .ETE__blackbox .ETE__bottomcont {
+            display: flex;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            position: absolute;
+            top: 55%;
+        }
+
+        .swiper-button-next {
+            left: 88%;
+        }
+
+        .swiper-button-prev {
+            left: 80%;
+        }
+</style>
+</head>
+<body>
+    <div class="ETE__slides">
+        <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+        <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="ETE-sliderwrapper">
+                    <div class="ETE__leftcont">
+                        <img src="random_img1.jpg" class="ETE__sliderimg" alt="random_img">
+                    </div>
+                    <div class="ETE__leftpara">
+                        <p class="ETE__imagecont1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, asperiores.</p>
+                        <p class="ETE__imgcont2">Lorem ipsum dolor sit amet.</p>
+                    </div>
+                    <div class="ETE__rightcont">
+                        <div class="ETE__blackbox">
+                            <p class="ETE__toppara">MANUFACTURING</p>
+                            <div class="ETE__header">
+                                <p class="ETE__num">50%</p>
+                                <p class="ETE__para">Lorem ipsum, dolor sit amet consectetur adipisicing<br /> elit. A illum odit
+                                    consequatur.</p>
+                            </div>
+                            <div class="ETE__bottomcont">
+                                <div class="ETE__iconwrapper">
+                                    <img src="random_icon1.png" class="ETE__icon" alt="icons">
+                                </div>
+                                <ul class="ETE__lists">
+                                    <li class="ETE_list">Lorem ipsum dolor sit amet consectetur.</li>
+                                    <li class="ETE_list">Lorem ipsum dolor sit amet consectetur.</li>
+                                    <li class="ETE_list">Lorem ipsum dolor sit amet consectetur.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="ETE-sliderwrapper">
+                    <div class="ETE__leftcont">
+                        <img src="random_img1.jpg" class="ETE__sliderimg" alt="random_img">
+                    </div>
+                    <div class="ETE__leftpara">
+                        <p class="ETE__imagecont1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, asperiores.</p>
+                        <p class="ETE__imgcont2">Lorem ipsum dolor sit amet.</p>
+                    </div>
+                    <div class="ETE__rightcont">
+                        <div class="ETE__blackbox">
+                            <p class="ETE__toppara">MANUFACTURING</p>
+                            <div class="ETE__header">
+                                <p class="ETE__num">50%</p>
+                                <p class="ETE__para">Lorem ipsum, dolor sit amet consectetur adipisicing<br /> elit. A illum odit
+                                    consequatur.</p>
+                            </div>
+                            <div class="ETE__bottomcont">
+                                <div class="ETE__iconwrapper">
+                                    <img src="random_icon1.png" class="ETE__icon" alt="icons">
+                                </div>
+                                <ul class="ETE__lists">
+                                    <li class="ETE_list">Lorem ipsum dolor sit amet consectetur.</li>
+                                    <li class="ETE_list">Lorem ipsum dolor sit amet consectetur.</li>
+                                    <li class="ETE_list">Lorem ipsum dolor sit amet consectetur.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="ETE-sliderwrapper">
+                    <div class="ETE__leftcont">
+                        <img src="random_img1.jpg" class="ETE__sliderimg" alt="random_img">
+                    </div>
+                    <div class="ETE__leftpara">
+                        <p class="ETE__imagecont1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, asperiores.</p>
+                        <p class="ETE__imgcont2">Lorem ipsum dolor sit amet.</p>
+                    </div>
+                    <div class="ETE__rightcont">
+                        <div class="ETE__blackbox">
+                            <p class="ETE__toppara">MANUFACTURING</p>
+                            <div class="ETE__header">
+                                <p class="ETE__num">50%</p>
+                                <p class="ETE__para">Lorem ipsum, dolor sit amet consectetur adipisicing<br /> elit. A illum odit
+                                    consequatur.</p>
+                            </div>
+                            <div class="ETE__bottomcont">
+                                <div class="ETE__iconwrapper">
+                                    <img src="random_icon1.png" class="ETE__icon" alt="icons">
+                                </div>
+                                <ul class="ETE__lists">
+                                    <li class="ETE_list">Lorem ipsum dolor sit amet consectetur.</li>
+                                    <li class="ETE_list">Lorem ipsum dolor sit amet consectetur.</li>
+                                    <li class="ETE_list">Lorem ipsum dolor sit amet consectetur.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+      <script>
+    var swiper = new Swiper(".mySwiper", {
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+  </script>
+</body>
+</html>
