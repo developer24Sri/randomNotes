@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive banner</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+        /* .banner {
+            background-image: url(random_bg.jpg);
+            background-repeat: no-repeat;
+            background-size: 100%;
+            width: 100%;
+            height: 100vh;
+        } */
+        .navbar {
+            width: 100%;
+            position: sticky;
+            height: 10vh;
+            top: 0;
+            left: 0;
+            background-color: lightskyblue;
+        }
+
+        .navbar .navbar-wrapper .navlinks{
+            display: flex;
+            list-style-type: none;
+
+        }
+
+        .banner {
+            background-image: url(random_bg.jpg);
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 90vh;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-wrapper">
+            <ul class="navlinks">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section class="banner">
+
+    </section>
+</body>
+</html>
+
+<!-- 
+notes:
+background-img:
+background-repeat: 
+background-size: 100% //standard or 50% 50px i.e 50% widht and 50px height
+background-position: 100px 10px; //100px is X-axis and 10px is Y-axis
+and we can also use background-position: center/ right/ left/ bottom/ top also
+and we can also do bg-position: top 20px right 50px i.e The image will be placed with its top-right corner 20px below the top, and 50px left of the right edge.
+NOTE: background image dont overflow to the x-positions
+we can add also another image and using comma(,) and we can also use the background-allproperties: 10%(first-img),13%(second-img)
+NOTE: something invalid while positioning in the bg then default it goes to top-left
+use-case: if u want to select the classes that have same prefix ex: [class*="bg=-"] {}
+we can also perform,
+background-position: top left, top center, top right, center left, center center, center right, bottom left, bottom center, bottom right
+so basically they just target and crop top(target) left(crop)
+
+-->

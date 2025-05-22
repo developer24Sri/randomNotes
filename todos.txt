@@ -1,0 +1,4 @@
+responsive background image with position sticky navbar
+swipper banner img - 1010
+
+update your layout style

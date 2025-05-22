@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.parent {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 8px;
+    height: 60vh;
+    margin: 20px;
+}
+
+.parent > div {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    display: grid;
+    place-items: center;
+    font-size: 2em;
+}
+
+/* Default grid positions */
+.div1 { grid-area: 1 / 1 / 6 / 4; }
+.div2 { grid-area: 1 / 4 / 3 / 5; }
+.div3 { grid-area: 1 / 5 / 3 / 6; }
+.div4 { grid-area: 3 / 4 / 6 / 6; }
+
+/* Dynamic layout classes */
+.parent.single-item > div { grid-area: 1 / 1 / 6 / 6 !important; }
+.parent.two-items { grid-template-columns: repeat(2, 1fr); grid-template-rows: 1fr; }
+.parent.three-items { grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr); }
+
+.hidden { display: none !important; }
+
+.checkbox-container {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+</style>
+</head>
+<body>
+<div class="checkbox-container">
+    <label>
+        <input type="checkbox" id="selectAll" checked> Select All
+    </label>
+    <label>
+        <input type="checkbox" class="box" data-box="1" checked> Box 1
+    </label>
+    <label>
+        <input type="checkbox" class="box" data-box="2" checked> Box 2
+    </label>
+    <label>
+        <input type="checkbox" class="box" data-box="3" checked> Box 3
+    </label>
+    <label>
+        <input type="checkbox" class="box" data-box="4" checked> Box 4
+    </label>
+</div>
+
+<div class="parent">
+    <div class="div1">1</div>
+    <div class="div2">2</div>
+    <div class="div3">3</div>
+    <div class="div4">4</div>
+</div>
+
+<script>
+const checkboxes = document.querySelectorAll('.box');
+const selectAll = document.getElementById('selectAll');
+const parent = document.querySelector('.parent');
+const boxes = parent.children;
+
+function updateLayout() {
+    const visibleBoxes = Array.from(boxes).filter(b => !b.classList.contains('hidden'));
+    
+    // Clear layout classes
+    parent.className = 'parent';
+    
+    // Apply dynamic layout classes
+    if (visibleBoxes.length === 1) {
+        parent.classList.add('single-item');
+    } else if (visibleBoxes.length === 2) {
+        parent.classList.add('two-items');
+    } else if (visibleBoxes.length === 3) {
+        parent.classList.add('three-items');
+    }
+}
+
+function toggleBoxes() {
+    const allChecked = Array.from(checkboxes).every(c => c.checked);
+    selectAll.checked = allChecked;
+    
+    checkboxes.forEach((checkbox, index) => {
+        boxes[index].classList.toggle('hidden', !checkbox.checked);
+    });
+    
+    updateLayout();
+}
+
+// Event listeners
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+        if (!checkbox.checked) selectAll.checked = false;
+        toggleBoxes();
+    });
+});
+
+selectAll.addEventListener('change', () => {
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = selectAll.checked;
+    });
+    toggleBoxes();
+});
+</script>
+</body>
+</html>
