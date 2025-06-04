@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll Counter</title>
+    <style>
+      #counter-section {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 100vh;
+        font-size: 2rem;
+        font-weight: bold;
+      }
+
+      .counter {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <section id="counter-section">
+      <div
+        class="counter percent"
+        data-start="0"
+        data-target1="45"
+        data-target2="65"
+      >
+        0-0%
+      </div>
+      <div class="counter plus" data-target="50">00+</div>
+      <div class="counter plain" data-target="82">0</div>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const section = document.getElementById("counter-section");
+        let hasAnimated = false;
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting && !hasAnimated) {
+                hasAnimated = true;
+                animateCounters();
+              }
+            });
+          },
+          { threshold: 0.5 }
+        );
+
+        observer.observe(section);
+
+        function animateCounters() {
+          document.querySelectorAll(".counter").forEach((counter) => {
+            if (counter.classList.contains("percent")) {
+              animateDoubleCounter(counter);
+            } else {
+              animateSingleCounter(counter);
+            }
+          });
+        }
+
+        function animateDoubleCounter(counter) {
+          const target1 = +counter.dataset.target1;
+          const target2 = +counter.dataset.target2;
+          const duration = 2000;
+          const start = performance.now();
+
+          function update(time) {
+            const progress = Math.min((time - start) / duration, 1);
+            const val1 = Math.floor(progress * target1);
+            const val2 = Math.floor(progress * target2);
+            counter.textContent = `${val1}-${val2}%`;
+            if (progress < 1) requestAnimationFrame(update);
+          }
+
+          requestAnimationFrame(update);
+        }
+
+        function animateSingleCounter(counter) {
+          const target = +counter.dataset.target;
+          const duration = 2000;
+          const start = performance.now();
+
+          function update(time) {
+            const progress = Math.min((time - start) / duration, 1);
+            const val = Math.floor(progress * target);
+
+            if (counter.classList.contains("plus")) {
+              counter.textContent = val < 10 ? `0${val}+` : `${val}+`;
+            } else {
+              counter.textContent = `${val}`;
+            }
+
+            if (progress < 1) requestAnimationFrame(update);
+          }
+
+          requestAnimationFrame(update);
+        }
+      });
+    </script>
+  </body>
+</html>
