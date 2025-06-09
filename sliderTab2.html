@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+     <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <style>
+.sliderTab {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding: 0;
+    background: var(--color2);
+}
+.sliderTab .swiper-slide {
+    width: auto !important;
+    min-width: 20%; /* Each tab at least 20% of container */
+    flex: 1 1 0;
+}
+.sliderTab .swiper-slide a {
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+.sliderTab .swiper-slide .text {
+    position: relative;
+    display: inline-block;
+    margin: 0 1vw;
+    padding: 2vw 1vw;
+    white-space: nowrap;
+    font-size: 1rem;
+    line-height: 1em;
+    letter-spacing: 0.05em;
+    color: #333;
+    transition: 0.25s;
+}
+.sliderTab .swiper-slide .text:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 0.2em;
+    background: var(--color1);
+    transform: translateX(-50%);
+    transition: 0.25s;
+}
+.sliderTab .swiper-slide.on .text {
+    color: var(--color1);
+    text-shadow: 0 0 0.08em var(--color1), 0 0 0.08em var(--color1);
+}
+.sliderTab .swiper-slide.on .text:after {
+    width: 100%;
+}
+
+.sliderContent {
+    width: 100%;
+    max-width: 90vw;
+    margin: 0 auto;
+}
+.sliderContent .swiper-slide {
+    padding: 0 5vw;
+    box-sizing: border-box;
+    width: 100%;
+}
+.sliderContent .swiper-slide .title {
+    margin-bottom: 2vw;
+    font-size: 2em;
+    text-align: center;
+}
+.sliderContent .swiper-slide .content {
+    margin: 0 auto;
+    max-width: 90%;
+    font-size: 1em;
+    line-height: 2;
+    text-align: center;
+    word-break: break-word;
+}
+    </style>
+  </head>
+  
+  <body>
+    <div class="swiper-container sliderContent">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="title">Tab 1</div>
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="title">Tab 2</div>
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="title">Tab 3</div>
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="title">Tab 4</div>
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="title">Tab 5</div>
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-container sliderTab">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide on">
+          <a href="#"><span class="text">Tab One</span></a>
+        </div>
+        <div class="swiper-slide">
+          <a href="#"><span class="text">Tab Two</span></a>
+        </div>
+        <div class="swiper-slide">
+          <a href="#"><span class="text">Tab Three</span></a>
+        </div>
+        <div class="swiper-slide">
+          <a href="#"><span class="text">Tab Four</span></a>
+        </div>
+        <div class="swiper-slide">
+          <a href="#"><span class="text">Tab Five</span></a>
+        </div>
+      </div>
+    </div>
+     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+     <script>
+        var swiperTab = new Swiper(".sliderTab", {
+  slidesPerView: "auto",
+  preventClicks: true,
+  preventClicksPropagation: false,
+  observer: true,
+  observeParents: true
+});
+
+var $snbSwiperItem = $(".sliderTab .swiper-wrapper .swiper-slide a");
+$snbSwiperItem.click(function () {
+  var target = $(this).parent();
+  $snbSwiperItem.parent().removeClass("on");
+  target.addClass("on");
+  muCenter(target);
+});
+
+function muCenter(target) {
+  var snbwrap = $(".sliderTab .swiper-wrapper");
+  var targetPos = target.position();
+  var box = $(".sliderTab");
+  var boxHarf = box.width() / 2;
+  var pos;
+  var listWidth = 0;
+
+  snbwrap.find(".swiper-slide").each(function () {
+    listWidth += $(this).outerWidth();
+  });
+
+  var selectTargetPos = targetPos.left + target.outerWidth() / 2;
+  if (selectTargetPos <= boxHarf) {
+    // left
+    pos = 0;
+  } else if (listWidth - selectTargetPos <= boxHarf) {
+    //right
+    pos = listWidth - box.width();
+  } else {
+    pos = selectTargetPos - boxHarf;
+  }
+
+  setTimeout(function () {
+    snbwrap.css({
+      transform: "translate3d(" + pos * -1 + "px, 0, 0)",
+      "transition-duration": "250ms"
+    });
+  }, 100);
+}
+
+var swiperContent = new Swiper(".sliderContent", {
+  slidesPerView: 1,
+  allowTouchMove: false,
+  thumbs: {
+    swiper: swiperTab
+  }
+});
+     </script>
+  </body>
+</html>

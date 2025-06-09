@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SliderTab</title>
+    <style>
+      :root {
+        --color1: #0069eb;
+        --color2: #e6f0fd;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        padding: 0px;
+        margin: 0px;
+        box-sizing: border-box;
+      }
+
+      .healthcare {
+        width: 100%;
+        overflow-x: hidden;
+      }
+
+      .healthcare .hc-wrapper {
+        padding-left: 5%;
+        padding-right: 5%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .sliderTab {
+        position: relative;
+        overflow: hidden;
+        width: 50%;
+        margin-top: 5%;
+        margin-bottom: 5%;
+        padding: 0;
+        background: var(--color2);
+        border-radius: 66px;
+      }
+
+      .sliderTab .swiper-slide {
+        width: auto !important;
+      }
+
+      .sliderTab .swiper-slide a {
+        display: block;
+        text-align: center;
+      }
+
+      .sliderTab .swiper-slide .text {
+        position: relative;
+        display: inline-block;
+        margin: 0 1%;
+        padding: 3% 1.5%;
+        white-space: nowrap;
+        font-size: 1rem;
+        line-height: 1em;
+        letter-spacing: 0.05em;
+        color: #333;
+        transition: 0.25s;
+      }
+
+      .sliderTab .swiper-slide .text::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--color1);
+        transform: translateX(-50%);
+        transition: 0.25s;
+      }
+
+      .sliderTab .swiper-slide.on .text {
+        color: var(--color1);
+        text-shadow: 0 0 0.8px var(--color1), 0 0 0.8px var(--color1);
+      }
+
+      .sliderTab .swiper-slide.on .text::after {
+        width: 100%;
+      }
+
+      .sliderContent {
+        width: 100%;
+      }
+
+      .sliderContent .swiper-slide {
+        padding: 0 5%;
+      }
+
+      .sliderContent .swiper-slide .title {
+        margin-bottom: 3%;
+        font-size: 1.875rem; 
+        text-align: center;
+      }
+
+      .sliderContent .swiper-slide .content {
+        margin: 0 auto;
+        width: 90%;
+        font-size: 0.875rem;
+        line-height: 2;
+        text-align: center;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+  </head>
+  <body>
+    <div class="healthcare">
+      <div class="hc-wrapper">
+        <div class="swiper-container sliderContent">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="title">Tab 1</div>
+              <div class="content">Content for Tab 1...</div>
+            </div>
+            <div class="swiper-slide">
+              <div class="title">Tab 2</div>
+              <div class="content">Content for Tab 2...</div>
+            </div>
+            <div class="swiper-slide">
+              <div class="title">Tab 3</div>
+              <div class="content">Content for Tab 3...</div>
+            </div>
+            <div class="swiper-slide">
+              <div class="title">Tab 4</div>
+              <div class="content">Content for Tab 4...</div>
+            </div>
+            <div class="swiper-slide">
+              <div class="title">Tab 5</div>
+              <div class="content">Content for Tab 5...</div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-container sliderTab">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide on">
+              <a href="#"
+                ><span class="text"
+                  >Surgical Planning <br />
+                  & Navigation</span
+                ></a
+              >
+            </div>
+            <div class="swiper-slide">
+              <a href="#"
+                ><span class="text">Medical Training Simulations</span></a
+              >
+            </div>
+            <div class="swiper-slide">
+              <a href="#"
+                ><span class="text"
+                  >Patient Education <br />
+                  & Engagement</span
+                ></a
+              >
+            </div>
+            <div class="swiper-slide">
+              <a href="#"
+                ><span class="text"
+                  >Surgical Planning <br />
+                  & Navigation</span
+                ></a
+              >
+            </div>
+            <div class="swiper-slide">
+              <a href="#"
+                ><span class="text"
+                  >Patient Education <br />
+                  & Engagement</span
+                ></a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+      const swiperTab = new Swiper(".sliderTab", {
+        slidesPerView: 4.5,
+        spaceBetween: 25,
+        freeMode: true,
+        preventClicks: true,
+        preventClicksPropagation: true,
+        observer: true,
+        observeParents: true,
+        slidesOffsetBefore: 50,
+      });
+
+      // Handle tab click
+      const tabItems = document.querySelectorAll(".sliderTab .swiper-slide a");
+
+      tabItems.forEach((item, index) => {
+        item.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          // Highlight active tab
+          tabItems.forEach((el) => el.parentElement.classList.remove("on"));
+          item.parentElement.classList.add("on");
+
+          // Move swiper to clicked tab
+          swiperTab.slideTo(index, 300); // 300ms smooth scroll
+        });
+      });
+
+      // Content swiper (if needed)
+      const swiperContent = new Swiper(".sliderContent", {
+        slidesPerView: 1,
+        allowTouchMove: false,
+        thumbs: {
+          swiper: swiperTab,
+        },
+      });
+    </script>
+  </body>
+</html>
