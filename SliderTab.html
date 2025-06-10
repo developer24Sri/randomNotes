@@ -93,15 +93,33 @@
 
       .sliderContent {
         width: 100%;
+        height: auto;
+        border-radius: 35px;
+        border: 1px solid red;
+        position: relative;
       }
 
+      .sliderContent .swiper-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
       .sliderContent .swiper-slide {
-        padding: 0 5%;
+      display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5%;
+  width: 100%;
+  height: 100%;
       }
+
+  
 
       .sliderContent .swiper-slide .title {
         margin-bottom: 3%;
-        font-size: 1.875rem; 
+        font-size: 1.875rem;
         text-align: center;
       }
 
@@ -192,7 +210,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
       const swiperTab = new Swiper(".sliderTab", {
-        slidesPerView: 4.5,
+        slidesPerView: 4.2,
         spaceBetween: 25,
         freeMode: true,
         preventClicks: true,
@@ -200,6 +218,7 @@
         observer: true,
         observeParents: true,
         slidesOffsetBefore: 50,
+        slidesOffsetAfter: 100,
       });
 
       // Handle tab click
@@ -222,6 +241,10 @@
       const swiperContent = new Swiper(".sliderContent", {
         slidesPerView: 1,
         allowTouchMove: false,
+        effect: "fade",
+        fadeEffect: {
+          crossFade: true,
+        },
         thumbs: {
           swiper: swiperTab,
         },
