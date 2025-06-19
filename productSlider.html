@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Slider with Modal</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .main-slider-container {
+      width: 90%;
+      margin: 30px auto;
+    }
+    .swiper-slide {
+      text-align: center;
+      cursor: pointer;
+    }
+    .swiper-slide img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .product-name {
+      margin-top: 10px;
+    }
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal {
+      background: white;
+      width: 80%;
+      max-width: 800px;
+      padding: 20px;
+      border-radius: 10px;
+      display: flex;
+      gap: 20px;
+    }
+    .modal-image {
+      flex: 1;
+    }
+    .modal-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    .modal-content {
+      flex: 1;
+    }
+    .modal-nav {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 20px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .swiper-button-prev,
+.swiper-button-next {
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 20px;
+  color: black;
+  background: white;
+  padding: 5px;
+  border-radius: 50%;
+}
+  </style>
+</head>
+<body>
+  <div class="main-slider-container">
+    <div class="swiper main-slider">
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <script>
+          for (let i = 1; i <= 14; i++) {
+            document.write(`
+              <div class='swiper-slide' data-index='${i - 1}'>
+                <img src='https://via.placeholder.com/200x150?text=Product+${i}' alt='Product ${i}' />
+                <div class='product-name'>Product ${i}</div>
+              </div>
+            `);
+          }
+        </script>
+      </div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay">
+    <div class="modal">
+      <div class="modal-image">
+        <img id="modalImage" src="" alt="Large Product Image" />
+      </div>
+      <div class="modal-content">
+        <h2 id="modalTitle"></h2>
+        <p id="modalDescription">Detailed product description will go here...</p>
+        <div class="modal-nav">
+          <button id="prevBtn">Previous</button>
+          <button id="nextBtn">Next</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-close" id="modalClose">✖</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    const productData = Array.from({ length: 14 }, (_, i) => ({
+      img: `https://via.placeholder.com/600x400?text=Product+${i + 1}`,
+      name: `Product ${i + 1}`,
+      description: `Description for Product ${i + 1}`,
+    }));
+
+    const mainSwiper = new Swiper(".main-slider", {
+      slidesPerView: 4,
+      spaceBetween: 20,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+
+    const modalOverlay = document.querySelector(".modal-overlay");
+    const modalImage = document.getElementById("modalImage");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDescription = document.getElementById("modalDescription");
+    const modalClose = document.getElementById("modalClose");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    let currentIndex = 0;
+
+    function updateModal(index) {
+      const product = productData[index];
+      modalImage.src = product.img;
+      modalTitle.textContent = product.name;
+      modalDescription.textContent = product.description;
+    }
+
+    document.querySelectorAll(".swiper-slide").forEach(slide => {
+  slide.addEventListener("click", (e) => {
+    // Prevent clicks triggered from nav buttons
+    if (e.target.closest(".swiper-button-next") || e.target.closest(".swiper-button-prev")) return;
+
+    currentIndex = parseInt(slide.getAttribute("data-index"));
+    updateModal(currentIndex);
+    modalOverlay.style.display = "flex";
+  });
+});
+
+
+    modalClose.addEventListener("click", () => {
+      modalOverlay.style.display = "none";
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateModal(currentIndex);
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentIndex < productData.length - 1) {
+        currentIndex++;
+        updateModal(currentIndex);
+      }
+    });
+  </script>
+</body>
+</html>
