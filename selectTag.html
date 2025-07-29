@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="checkbox" id="men's clothing" class="check"/>
+    <label for="men's clothing">Adidas</label>
+    <input type="checkbox" id="jewelery" class="check"/>
+    <label for="jewelery">Bata</label>
+    <input type="checkbox" id="all" class="all">
+    <label for="all">All</label>
+    <div class="show"></div>
+    <script>
+    // Fetching data from the API and displaying it
+        const myAPI = "https://fakestoreapi.com/products";
+        fetch(myAPI)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                const fetchedData = data;
+                const productWrapper = document.createElement("div");
+            productWrapper.className = "product-wrapper";
+            document.querySelector(".show").appendChild(productWrapper);
+            productWrapper.innerHTML = `<h1>Products</h1>`;
+            fetchedData.forEach(product => {
+                const productDiv = document.createElement("div");
+                productDiv.className = "product";
+                productDiv.innerHTML = `
+                    <h2>${product.title}</h2>
+                    <p>${product.description}</p>
+                    <p>Price: $${product.price}</p>
+                `;
+                productWrapper.appendChild(productDiv);
+                //filtering products based on checkbox selection
+                
+                const filterProducts = document.querySelectorAll(".check");
+                filterProducts.forEach(filter => {
+                    filter.addEventListener("change", function() {
+                        if (this.checked) {
+                            console.log(`${this.id} is checked`);
+                            const filteredProducts = fetchedData.filter(product => product.category === this.id);
+                            productWrapper.innerHTML = `<h1>Filtered Products</h1>`;
+                            filteredProducts.forEach(filteredProduct => {
+                                const filteredProductDiv = document.createElement("div");
+                                filteredProductDiv.className = "product";
+                                filteredProductDiv.innerHTML = `
+                                    <h2>${filteredProduct.title}</h2>
+                                    <p>${filteredProduct.description}</p>
+                                    <p>Price: $${filteredProduct.price}</p>
+                                `;
+                                productWrapper.appendChild(filteredProductDiv);
+                            });
+                        } else {
+                            document.querySelector(".all").checked = true;
+                            console.log(`${this.id} is unchecked`);
+                            productWrapper.innerHTML = `<h1>Products</h1>`;
+                            fetchedData.forEach(product => {
+                                const productDiv = document.createElement("div");
+                                productDiv.className = "product";
+                                productDiv.innerHTML = `
+                                    <h2>${product.title}</h2>
+                                    <p>${product.description}</p>
+                                    <p>Price: $${product.price}</p>
+                                `;
+                                productWrapper.appendChild(productDiv);
+                            });
+                        }
+                    })
+                })
+            });
+                }).catch(error => console.error('Error fetching data:', error));
+
+            
+    </script>
+</body>
+</html>

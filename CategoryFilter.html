@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter</title>
+    <style>
+        img {
+            width: 100%;
+            height: auto;
+        }
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.product-card {
+  width: 200px;
+  height: 200px;
+}
+    </style>
+</head>
+<body>
+    <div class="filters">
+  <h3>Brand</h3>
+  <label><input type="checkbox" name="brand" value="Nike"> Nike</label>
+  <label><input type="checkbox" name="brand" value="Puma"> Puma</label>
+  <label><input type="checkbox" name="brand" value="Bata"> Bata</label>
+
+  <h3>Model</h3>
+  <label><input type="checkbox" name="model" value="Men's Wear"> Men's Wear</label>
+  <label><input type="checkbox" name="model" value="Women's Wear"> Women's Wear</label>
+  <label><input type="checkbox" name="model" value="Kids"> Kids</label>
+
+  <h3>Release Year</h3>
+  <label><input type="checkbox" name="year" value="2023"> 2023</label>
+  <label><input type="checkbox" name="year" value="2024"> 2024</label>
+</div>
+
+<!-- Product Display Section -->
+<div id="products-results" class="products-container"></div>
+<script>
+    const products = [
+  { id: 1, brand: "Nike", model: "Men's Wear", price: 230, releaseYear: 2024 },
+  { id: 2, brand: "Puma", model: "Women's Wear", price: 190, releaseYear: 2023 },
+  { id: 3, brand: "Bata", model: "Kids", price: 150, releaseYear: 2024},
+  { id: 4, brand: "Nike", model: "Men's Wear", price: 450, releaseYear: 2023},
+  { id: 5, brand: "Puma", model: "Women's Wear", price: 290, releaseYear: 2024}
+];
+
+
+const checkboxes = document.querySelectorAll('.filters input[type="checkbox"]');
+const resultsContainer = document.getElementById('products-results');
+
+function renderProducts(data) {
+  resultsContainer.innerHTML = '';
+
+  if (data.length === 0) {
+    resultsContainer.innerHTML = '<p>No products found.</p>';
+    return;
+  }
+
+  data.forEach((product, index) => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+
+    const imagePath = `./images/randomImg${index + 1}.jpg`; // Will loop for up to 5 images
+
+    card.innerHTML = `
+      <img src="${imagePath}" alt="${product.brand}" />
+      <h4>${product.brand} - ${product.model}</h4>
+      <p>Price: ₹${product.price}</p>
+      <p>Released: ${product.releaseYear}</p>
+    `;
+
+    resultsContainer.appendChild(card);
+  });
+}
+
+function getSelectedFilters(name) {
+  return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+              .map(cb => cb.value);
+}
+
+function filterProducts() {
+  const selectedBrands = getSelectedFilters('brand');
+  const selectedModels = getSelectedFilters('model');
+  const selectedYears = getSelectedFilters('year').map(Number);
+
+  const filtered = products.filter(product => {
+    const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
+    const modelMatch = selectedModels.length === 0 || selectedModels.includes(product.model);
+    const yearMatch = selectedYears.length === 0 || selectedYears.includes(product.releaseYear);
+    return brandMatch && modelMatch && yearMatch;
+  });
+
+  renderProducts(filtered);
+}
+
+checkboxes.forEach(cb => cb.addEventListener('change', filterProducts));
+
+// Initial render
+renderProducts(products);
+
+</script>
+</body>
+</html>
