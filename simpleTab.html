@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tabbed Cards</title>
+  <style>
+    .tabHeader {
+      display: flex;
+      gap: 20px;
+      cursor: pointer;
+    }
+
+    .tabContents .tab-content.active {
+      display: block;
+    }
+
+    .tabContents .tab-content {
+      display: none;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <div class="tabHeader">
+    <h1 class="tabs" id="tab1">Tab1</h1>
+    <h1 class="tabs" id="tab2">Tab2</h1>
+  </div>
+
+  <div class="tabContents">
+    <div class="tab-content active" data-content="tab1"></div>
+    <div class="tab-content" data-content="tab2"></div>
+  </div>
+
+  <script>
+    const sampleData = [
+      { title: "Card One", description: "This is the first card." },
+      { title: "Card Two", description: "This is the second card." },
+      { title: "Card Three", description: "This is the third card." }
+    ];
+
+    // Render cards inside the given container
+    function renderCards(container) {
+      container.innerHTML = ""; // Clear any previous content
+      sampleData.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `<h3>${item.title}</h3><p>${item.description}</p>`;
+        container.appendChild(card);
+      });
+    }
+
+    // Handle tab switching
+    document.querySelectorAll(".tabs").forEach(header => {
+      header.addEventListener("click", () => {
+        const contents = document.querySelectorAll(".tab-content");
+        contents.forEach(content => {
+            console.log(content)
+          if (header.id === content.getAttribute("data-content")) {
+            // console.log(header.id)
+            content.classList.add("active");
+            renderCards(content); // Render cards into active tab
+          } else {
+            content.classList.remove("active");
+          }
+        });
+      });
+    });
+
+    // Initial render in the first active tab
+    const firstActive = document.querySelector(".tab-content.active");
+    // console.log(firstActive)
+    renderCards(firstActive);
+  </script>
+</body>
+</html>

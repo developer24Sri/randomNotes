@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dynamic Custom Dropdowns</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .form-section {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .custom-dd {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .select-zone {
+      padding: 10px;
+      border: 1px solid #333;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f9f9f9;
+    }
+
+    .select-zone img {
+      width: 12px;
+      height: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .select-zone.active img {
+      transform: rotate(180deg);
+    }
+
+    .drop-lists {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      border: 1px solid #ccc;
+      border-top: none;
+      max-height: 150px;
+      overflow-y: auto;
+      display: none;
+      background: white;
+      position: absolute;
+      width: 100%;
+      z-index: 5;
+    }
+
+    .drop-lists.active {
+      display: block;
+    }
+
+    .select-list {
+      padding: 10px;
+      border-top: 1px solid #eee;
+      cursor: pointer;
+    }
+
+    .select-list:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-section" id="form-container">
+    <!-- Custom dropdowns will be injected here -->
+  </div>
+
+  <script>
+    const dropdownData = [
+      {
+        id: 'brand',
+        label: 'Select Brand',
+        options: ['Nike', 'Puma', 'Bata']
+      },
+      {
+        id: 'model',
+        label: 'Select Model',
+        options: ['Men', 'Women', 'Kids']
+      },
+      {
+        id: 'year',
+        label: 'Release Year',
+        options: ['2022', '2023', '2024']
+      }
+    ];
+
+    const container = document.getElementById('form-container');
+
+    dropdownData.forEach(({ id, label, options }) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "custom-dd";
+      wrapper.innerHTML = `
+        <div class="select-zone" data-id="${id}">
+          <p class="select-txt">${label}</p>
+          <img src="https://cdn-icons-png.flaticon.com/512/2985/2985150.png" alt="▼" />
+        </div>
+        <ul class="drop-lists">
+          ${options.map(opt => `<li class="select-list">${opt}</li>`).join("")}
+        </ul>
+      `;
+      container.appendChild(wrapper);
+    });
+
+    // Add functionality
+    document.querySelectorAll(".custom-dd").forEach(dd => {
+      const selectZone = dd.querySelector(".select-zone");
+      const dropdown = dd.querySelector(".drop-lists");
+      const selectText = dd.querySelector(".select-txt");
+
+      selectZone.addEventListener("click", () => {
+        dropdown.classList.toggle("active");
+        selectZone.classList.toggle("active");
+      });
+
+      dropdown.querySelectorAll(".select-list").forEach(item => {
+        item.addEventListener("click", () => {
+          selectText.textContent = item.textContent;
+          dropdown.classList.remove("active");
+          selectZone.classList.remove("active");
+        });
+      });
+
+      // Optional: Close dropdown if clicked outside
+      document.addEventListener("click", (e) => {
+        if (!dd.contains(e.target)) {
+          dropdown.classList.remove("active");
+          selectZone.classList.remove("active");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
