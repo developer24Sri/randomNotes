@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GSAP Pinned Banner Slideshow</title>
+<style>
+    *{
+        box-sizing: border-box;
+        padding: 0px;
+        margin: 0px;
+    }
+  body {
+    font-family: sans-serif;
+    background: transparent;
+  }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    color: black;
+    background: transparent;
+  }
+
+  nav .logo {
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav ul li {
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  nav ul li:hover {
+    color: #ffd700;
+  }
+
+  /* ===== BANNER SECTION ===== */
+  .section {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .text-above, .text-below {
+    opacity: 0;
+    /* transform: translateY(20px); */
+    transition: opacity 0.5s, transform 0.5s;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    color: #222;
+  }
+
+  .banner {
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1s ease-in-out;
+    position: relative;
+    z-index: 1;
+  }
+
+  .content {
+    height: 100vh;
+    background: linear-gradient(white, #ddd);
+  }
+
+  .show-text .text-above,
+  .show-text .text-below {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">MyLogo</div>
+  <ul>
+    <li>Home</li>
+    <li>About</li>
+    <li>Contact Us</li>
+  </ul>
+</nav>
+
+<!-- BANNER SECTION -->
+<section class="section">
+  <div class="text-above">🌟 Welcome to Our Gallery 🌟</div>
+  <div class="banner"></div>
+  <div class="text-below">Scroll to explore more!</div>
+</section>
+
+<!-- CONTENT -->
+<div class="content">
+  <h1 style="text-align:center; padding-top:2rem;">Now the real page scroll begins</h1>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" crossorigin="anonymous"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  const images = [
+    "https://placehold.co/1600x900/ff7f7f/ffffff",
+    "https://placehold.co/1600x900/7fbfff/ffffff",
+    "https://placehold.co/1600x900/7fff7f/ffffff",
+    "https://placehold.co/1600x900/ffff7f/000000",
+    "https://placehold.co/1600x900/bf7fff/ffffff"
+  ];
+  let current = 0;
+  const banner = document.querySelector(".banner");
+
+  // Initial background
+  banner.style.backgroundImage = `url(${images[current]})`;
+
+  // Slideshow loop
+  setInterval(() => {
+    current = (current + 1) % images.length;
+    banner.style.backgroundImage = `url(${images[current]})`;
+  }, 4000);
+
+  // GSAP shrink with pinning
+  gsap.to(".banner", {
+    scrollTrigger: {
+      trigger: ".section",
+      start: "top top",
+      end: "+=500", // Scroll distance for shrinking
+      scrub: true,
+      pin: true, // keeps the banner in place
+      onUpdate: self => {
+        if (self.progress >= 1) {
+          document.querySelector(".section").classList.add("show-text");
+        } else {
+          document.querySelector(".section").classList.remove("show-text");
+        }
+      }
+    },
+    width: "38vw",
+    height: "38vh",
+    ease: "none"
+  });
+</script>
+
+</body>
+</html>
