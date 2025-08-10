@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hoverBox</title>
+<style>
+  .hoverBoxes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 250px);
+  }
+
+  .hb-container2 { grid-column: span 2 / span 2; }
+  .hb-container3 { grid-row-start: 2; }
+  .hb-container4 { grid-row-start: 2; }
+  .hb-container5 { grid-row-start: 2; }
+
+  .hoverBox {
+    border: 1px solid black;
+    position: relative;
+    overflow: hidden;
+    background: #f9f9f9;
+  }
+
+  /* Title — initially at bottom */
+  .hoverBox > p {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    z-index: 2;
+    transition: bottom 0.5s ease;
+  }
+
+  /* Content — initially hidden below */
+  .hoverContent {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 1rem;
+    box-sizing: border-box;
+    transition: bottom 0.5s ease;
+    z-index: 1;
+  }
+
+  /* Hover effect — slide both up */
+  .hoverBox:hover .hoverContent {
+    bottom: 0;
+  }
+  .hoverBox:hover > p {
+    bottom: 100%; /* move title up with content */
+  }
+
+  .hoverPara {
+    flex: 1;
+    margin: 0;
+  }
+
+  /* Image takes 50% width */
+  .hoverImg {
+    flex-direction:column ;
+  }
+  .hoverImg img {
+    width: 100%;
+    display: block;
+  }
+</style>
+</head>
+<body>
+<div class="hoverBoxes">
+  <div class="hoverBox hb-container1">
+    <p>UI/UX design</p>
+    <div class="hoverContent">
+      <p class="hoverPara">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis odit, cumque in sint enim saepe et voluptates assumenda modi eligendi.
+      </p>
+      <div class="hoverImg">
+        <img src="https://placehold.co/200x200" alt="hoverImg">
+      </div>
+    </div>
+  </div>
+  <div class="hoverBox hb-container2">
+    <p>Web Development</p>
+    <div class="hoverContent">
+      <p class="hoverPara">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis odit, cumque in sint enim saepe
+      </p>
+      <div class="hoverImg">
+        <img src="https://placehold.co/200x200" alt="hoverImg">
+      </div>
+    </div>
+  </div>
+  <div class="hoverBox hb-container3">
+    <p>App Development</p>
+    <div class="hoverContent">
+      <p class="hoverPara">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis odit, cumque in sint enim saepe et voluptates assumenda modi eligendi.
+      </p>
+      <div class="hoverImg">
+        <img src="https://placehold.co/200x200" alt="hoverImg">
+      </div>
+    </div>
+  </div>
+  <div class="hoverBox hb-container4">
+    <p>App Services</p>
+    <div class="hoverContent">
+      <p class="hoverPara">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis odit, cumque in sint enim saepe et voluptates assumenda modi eligendi.
+      </p>
+      <div class="hoverImg">
+        <img src="https://placehold.co/200x200" alt="hoverImg">
+      </div>
+    </div>
+  </div>
+  <div class="hoverBox hb-container5">
+    <p>Testing</p>
+    <div class="hoverContent">
+      <p class="hoverPara">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis odit, cumque in sint enim saepe et voluptates assumenda modi eligendi.
+      </p>
+      <div class="hoverImg">
+        <img src="https://placehold.co/200x200" alt="hoverImg">
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
