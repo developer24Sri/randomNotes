@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Swiper Banner Scroll Inside Section</title>
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+    }
+    body, html {
+      height: 100%;
+      overflow: hidden; /* prevent page scroll */
+      font-family: Arial, sans-serif;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem;
+      z-index: 20;
+      color: black;
+      background: transparent;
+    }
+    nav .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: white;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav ul li {
+      cursor: pointer;
+      color: white;
+      transition: color 0.3s;
+    }
+    nav ul li:hover {
+      color: #ffd700;
+    }
+
+    /* Banner Section: fixed height, vertical scroll inside */
+    section.banner {
+      position: relative;
+      height: 100vh;
+      overflow-y: scroll; /* scroll inside banner */
+      background: #222;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      scrollbar-width: thin;
+      scrollbar-color: #888 transparent;
+    }
+    /* Optional scrollbar styling */
+    section.banner::-webkit-scrollbar {
+      width: 8px;
+    }
+    section.banner::-webkit-scrollbar-thumb {
+      background-color: #888;
+      border-radius: 4px;
+    }
+
+    /* Text above and below - initially hidden */
+    .text-above, .text-below {
+      opacity: 0;
+      pointer-events: none;
+      font-size: 2rem;
+      margin: 1rem 0;
+      transition: opacity 0.8s ease;
+      flex-shrink: 0; /* prevent shrinking */
+    }
+    .text-above.aos-animate, .text-below.aos-animate {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Swiper container */
+    .swiper.mySwiper {
+      width: 100vw;
+      height: 100vh;
+      max-width: 100vw;
+      max-height: 100vh;
+      will-change: width, height, transform;
+      flex-shrink: 0; /* do not shrink */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+    }
+    .swiper-slide {
+      width: 100vw !important;
+      height: 100vh !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* Below content after banner */
+    .below {
+      height: 150vh;
+      padding: 2rem;
+      background: #f0f0f0;
+      color: #333;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">MyLogo</div>
+  <ul>
+    <li>Home</li>
+    <li>About</li>
+    <li>Contact Us</li>
+  </ul>
+</nav>
+
+<section class="banner" id="bannerSection">
+  <p class="text-above" data-aos="fade-down" data-aos-delay="100">Welcome</p>
+
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600" alt="Slide 1" />
+      </div>
+      <div class="swiper-slide">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600" alt="Slide 2" />
+      </div>
+      <div class="swiper-slide">
+        <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600" alt="Slide 3" />
+      </div>
+    </div>
+  </div>
+
+  <p class="text-below" data-aos="fade-up" data-aos-delay="100">How are you?</p>
+
+  <!-- Add some extra space inside banner to enable scrolling -->
+  <div style="height: 300px;"></div>
+</section>
+
+<div class="below">
+  <p>Below content here</p>
+  <p>Scroll inside the banner section to see the effect</p>
+</div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<script>
+  const swiper = new Swiper(".mySwiper", {
+    centeredSlides: true,
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+     allowTouchMove: false,
+  });
+
+  AOS.init({
+    once: true,
+  });
+
+  const banner = document.getElementById("bannerSection");
+  const swiperEl = document.querySelector(".swiper.mySwiper");
+  const textAbove = document.querySelector(".text-above");
+  const textBelow = document.querySelector(".text-below");
+
+  banner.addEventListener("scroll", () => {
+    let scrollY = banner.scrollTop;
+
+    // Scroll range inside banner
+    const maxScroll = 200;
+    let scrollClamped = Math.min(Math.max(scrollY, 0), maxScroll);
+    let progress = scrollClamped / maxScroll;
+
+    gsap.to(swiperEl, {
+      width: `${(1 - progress) * 100 + progress * 38}vw`,
+      height: `${(1 - progress) * 100 + progress * 48}vh`,
+      duration: 0.1,
+      ease: "power1.out",
+    });
+
+    if (progress > 0.1) {
+      textAbove.classList.add("aos-animate");
+      textBelow.classList.add("aos-animate");
+    } else {
+      textAbove.classList.remove("aos-animate");
+      textBelow.classList.remove("aos-animate");
+    }
+  });
+</script>
+
+</body>
+</html>

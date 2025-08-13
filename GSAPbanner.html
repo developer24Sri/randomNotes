@@ -32,6 +32,7 @@
   nav .logo {
     font-weight: bold;
     font-size: 1.5rem;
+    color: white;
   }
 
   nav ul {
@@ -45,6 +46,7 @@
   nav ul li {
     cursor: pointer;
     transition: color 0.3s;
+    color: white;
   }
 
   nav ul li:hover {
@@ -65,10 +67,22 @@
     opacity: 0;
     /* transform: translateY(20px); */
     transition: opacity 0.5s, transform 0.5s;
-    text-align: center;
-    position: relative;
     z-index: 2;
     color: #222;
+     position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  }
+
+  .text-above {
+    top: 25%;
+    left: 30%;
+  }
+
+  .text-below {
+    bottom: 25%;
+    left: 30%;
   }
 
   .banner {
@@ -107,7 +121,7 @@
 
 <!-- BANNER SECTION -->
 <section class="section">
-  <div class="text-above">🌟 Welcome to Our Gallery 🌟</div>
+  <div class="text-above">Welcome to Our Gallery</div>
   <div class="banner"></div>
   <div class="text-below">Scroll to explore more!</div>
 </section>
@@ -122,13 +136,13 @@
 <script>
   gsap.registerPlugin(ScrollTrigger);
 
-  const images = [
-    "https://placehold.co/1600x900/ff7f7f/ffffff",
-    "https://placehold.co/1600x900/7fbfff/ffffff",
-    "https://placehold.co/1600x900/7fff7f/ffffff",
-    "https://placehold.co/1600x900/ffff7f/000000",
-    "https://placehold.co/1600x900/bf7fff/ffffff"
-  ];
+const images = [
+  
+  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNjA3Njd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODY5Mjg3ODI&ixlib=rb-4.0.3&q=80&w=1600",
+  "https://images.unsplash.com/photo-1506744038136-46273834b3fb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNjA3Njd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODY5Mjg4MDc&ixlib=rb-4.0.3&q=80&w=1600",
+  "https://images.unsplash.com/photo-1518837695005-2083093ee35b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNjA3Njd8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODY5Mjg4NDk&ixlib=rb-4.0.3&q=80&w=1600"
+];
+
   let current = 0;
   const banner = document.querySelector(".banner");
 
