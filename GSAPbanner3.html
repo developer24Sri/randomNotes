@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Landing Page Reveal</title>
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: sans-serif;
+  background: #111;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* Navbar base styles */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  z-index: 10;
+  transition: background 0.3s;
+}
+
+.navbar .logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.navbar .nav-links {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+
+.white-navbar {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.black-navbar {
+  background: black;
+  color: white;
+  transform: translateY(100%);
+  position: fixed;
+}
+
+/* Hamburger base styles */
+.hamburger {
+  display: none; /* hidden by default, show in media query */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: white;
+  border-radius: 2px;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+
+/* Show hamburger and hide nav-links on tablet/mobile */
+@media (max-width: 1024px) {
+  /* Black Navbar nav-links */
+  .black-navbar .nav-links {
+    display: none;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9); /* solid/semi-transparent black */
+    flex-direction: column;
+    width: 200px;
+    padding: 20px;
+    gap: 15px;
+    border-radius: 0 0 0 10px;
+  }
+
+  /* For screens ≤1024px: simplified banner & navbar */
+@media (max-width: 1024px) {
+
+  /* White navbar hidden */
+  .white-navbar {
+    display: none;
+  }
+
+  /* Black navbar always visible at top */
+  .black-navbar {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+  }
+
+  /* Slideshow shrunk and centered */
+  .slideshow {
+    width: 38vw !important;
+    height: 38vh !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    position: absolute !important;
+  }
+
+  /* Above & below text visible */
+  .above-text, .below-text {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  /* Disable overflow lock */
+  body {
+    overflow: auto !important;
+  }
+}
+
+
+  .hamburger {
+    display: flex;
+  }
+}
+
+/* Active state for both navbars */
+.nav-links.active {
+  display: flex;
+  width: 100%;
+}
+
+/* Optional: nav-links when active */
+.nav-links.active {
+  display: flex;
+  width: 100%;
+}
+
+
+/* Banner section */
+.banner {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Slideshow styling */
+.slideshow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  animation: fadeSlideshow 12s infinite;
+}
+
+/* Delay each slide for sequencing */
+.slide:nth-child(1) {
+  animation-delay: 0s;
+}
+.slide:nth-child(2) {
+  animation-delay: 4s;
+}
+.slide:nth-child(3) {
+  animation-delay: 8s;
+}
+
+/* Fade in & fade out */
+@keyframes fadeSlideshow {
+  0% { opacity: 0; }
+  8% { opacity: 1; }
+  33% { opacity: 1; }
+  41% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+
+/* Texts */
+.above-text, .below-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.above-text {
+  top: 10%;
+}
+
+.below-text {
+  bottom: 10%;
+}
+
+.black-navbar {
+  background: black;
+  color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  transform: translateY(100vh); /* Start from bottom of viewport */
+  opacity: 0;
+}
+
+.above-text, .below-text {
+  opacity: 0;
+  transform: translateY(100vh); /* Start far below the viewport */
+}
+
+
+
+  </style>
+</head>
+<body>
+
+<!-- White Navbar (Initial) -->
+<nav class="navbar white-navbar">
+  <div class="logo">
+    <img src="images/dummy-logo-color.svg" alt="logo" data-logo="images/dummy-logo-white.svg">
+    <p>LOGO</p></div>
+
+  <ul class="nav-links">
+    <li>Home</li>
+    <li>About</li>
+    <li>Contact</li>
+  </ul>
+
+  <!-- Hamburger -->
+  <div class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+<!-- Black Navbar (Hidden Initially) -->
+<nav class="navbar black-navbar">
+  <div class="logo">
+    <img src="images/dummy-logo-white.svg" alt="logo" data-logo="images/dummy-logo-white.svg">
+    <p>LOGO</p></div>
+
+  <ul class="nav-links">
+    <li>Home</li>
+    <li>About</li>
+    <li>Contact</li>
+  </ul>
+
+  <!-- Hamburger -->
+  <div class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+
+  <!-- Banner Section -->
+  <section class="banner">
+    <div class="slideshow">
+      <div class="slide" style="background-image:url('https://picsum.photos/1920/1080?random=1');"></div>
+      <div class="slide" style="background-image:url('https://picsum.photos/1920/1080?random=2');"></div>
+      <div class="slide" style="background-image:url('https://picsum.photos/1920/1080?random=3');"></div>
+    </div>
+
+    <!-- Text that appears after reveal -->
+    <div class="above-text">This is the text above the slideshow</div>
+    <div class="below-text">This is the text below the slideshow</div>
+  </section>
+ 
+  <section class="content-below" style="height: 100vh;">
+
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+    // Select all hamburger menus
+const hamburgers = document.querySelectorAll(".hamburger");
+
+hamburgers.forEach(hamburger => {
+  hamburger.addEventListener("click", () => {
+    // Toggle the sibling nav-links
+    const navLinks = hamburger.parentElement.querySelector(".nav-links");
+    navLinks.classList.toggle("active");
+
+    // Animate hamburger into "X" (optional)
+    hamburger.classList.toggle("open");
+  });
+});
+
+  </script>
+  <script>
+
+    // Trigger on first scroll
+window.addEventListener("wheel", (e) => {
+  if (!revealPlayed) {
+
+    // Skip animation for ≤1024px
+    if (window.innerWidth <= 1024) {
+      revealPlayed = true;
+      return; // Do nothing, page already in final state
+    }
+
+    e.preventDefault(); // Stop actual scroll
+    playRevealAnimation();
+    revealPlayed = true;
+  }
+}, { passive: false });
+
+let revealPlayed = false;
+
+// Select elements
+const slideshow = document.querySelector(".slideshow");
+const whiteNavbar = document.querySelector(".white-navbar");
+const blackNavbar = document.querySelector(".black-navbar");
+const aboveText = document.querySelector(".above-text");
+const belowText = document.querySelector(".below-text");
+
+// Initially lock scroll
+document.body.style.overflow = "hidden";
+
+// Trigger on first scroll
+window.addEventListener("wheel", (e) => {
+  if (!revealPlayed) {
+    e.preventDefault(); // Stop actual scroll
+    playRevealAnimation();
+    revealPlayed = true;
+  }
+}, { passive: false });
+
+function playRevealAnimation() {
+  const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
+
+  // Step 1: Shrink slideshow to 38vw × 38vh, center
+  tl.to(slideshow, {
+    width: "38vw",
+    height: "38vh",
+    top: "50%",
+    left: "50%",
+    xPercent: -50,
+    yPercent: -50,
+    position: "absolute",
+    duration: 1
+  })
+
+  // Step 2: White navbar fades/slides up
+  .to(whiteNavbar, {
+    y: -100,
+    opacity: 0,
+    duration: 0.6
+  }, "-=0.8")
+
+  // Step 3: Black navbar rises from bottom
+  .to(blackNavbar, {
+    y: 0,
+    opacity: 1,
+    duration: 1
+  }, "-=0.5")
+
+  // Step 4: Above text rises from bottom
+  .to(aboveText, {
+    y: 0,
+    opacity: 1,
+    duration: 1
+  }, "-=0.6")
+
+  // Step 5: Below text rises from bottom
+  .to(belowText, {
+    y: 0,
+    opacity: 1,
+    duration: 1,
+    onComplete: () => {
+      // Enable scroll after animation
+      document.body.style.overflow = "auto";
+    }
+  }, "-=0.9");
+}
+
+  </script>
+</body>
+</html>
+
+<!-- 
+
+-->
