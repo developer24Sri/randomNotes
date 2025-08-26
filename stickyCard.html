@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sticky Notes Stack Effect</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f0f0f0;
+    }
+
+    .cards-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      width: 80%;
+      gap: 0; /* no gap, let them overlap */
+      position: relative;
+    }
+
+    .card-wrap {
+      width: 180px;
+      height: 220px;
+      background: #fff176;
+      border-radius: 10px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transform-origin: center top;
+      margin-left: -60px; /* overlap horizontally */
+      position: relative;
+    }
+
+    /* Different z-index for stacking effect */
+    .card-wrap:nth-child(1) { z-index: 3; background: #ffeb3b; }
+    .card-wrap:nth-child(2) { z-index: 5; background: #ffcc80; }
+    .card-wrap:nth-child(3) { z-index: 7; background: #aed581; }
+    .card-wrap:nth-child(4) { z-index: 4; background: #81d4fa; }
+    .card-wrap:nth-child(5) { z-index: 6; background: #ba68c8; }
+  </style>
+</head>
+<body>
+  <div class="cards-container">
+    <div class="card-wrap" data-offset-rot="-5">One</div>
+    <div class="card-wrap" data-offset-rot="4">Two</div>
+    <div class="card-wrap" data-offset-rot="-3">Three</div>
+    <div class="card-wrap" data-offset-rot="5">Four</div>
+    <div class="card-wrap" data-offset-rot="-4">Five</div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cards = document.querySelectorAll(".card-wrap");
+      const container = document.querySelector(".cards-container");
+      const elastic = { ease: "elastic.out(1, 0.75)", duration: 0.8 };
+
+      // Initial random slant
+      cards.forEach(card => {
+        const rot = parseFloat(card.dataset.offsetRot) || 0;
+        gsap.set(card, { rotation: rot, yPercent: 0 });
+      });
+
+      container.addEventListener("mousemove", e => {
+        const rect = container.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const percentage = mouseX / rect.width;
+        const index = Math.floor(percentage * cards.length);
+
+        newPortion(index);
+      });
+
+      container.addEventListener("mouseleave", resetAll);
+
+      function resetAll() {
+        cards.forEach(card => {
+          const rot = parseFloat(card.dataset.offsetRot) || 0;
+          gsap.to(card, { rotation: rot, xPercent: 0, yPercent: 0, scale: 1, ...elastic });
+        });
+      }
+
+      function newPortion(i) {
+        cards.forEach((card, idx) => {
+          if (idx === i) {
+            gsap.to(card, { rotation: 0, xPercent: 0, scale: 1.1, ...elastic });
+          } else {
+            const x = 50 / (idx - i);
+            const y = (idx - i) * 5; // slight vertical wiggle
+            gsap.to(card, { xPercent: x, yPercent: y, scale: 1, ...elastic });
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

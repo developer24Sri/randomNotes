@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Framed Center Swiper</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <style>
+    body {
+      overflow: hidden; /* stop page overflow */
+    }
+
+    .slider-wrapper {
+      position: relative;
+      width: 90%;
+      /* max-width: 1200px; */
+      overflow: hidden; /* contain swiper */
+    }
+
+ /* Frame overlay (unchanged) */
+.slider-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  height: 150px;
+  border: 6px solid #fff;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Swiper styling */
+ .swiper { overflow: visible; }
+
+/* Slides should match frame size */
+.swiper-slide {
+  width: 280px !important;   /* same as overlay */
+  height: 150px !important;  /* same as overlay */
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  opacity: 0.4;
+  transform: scale(0.8);
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+
+    /* Active (centered) slide */
+    .swiper-slide-active {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+  <div class="slider-wrapper">
+    <!-- Overlay frame -->
+    <div class="slider-overlay"></div>
+
+    <!-- Swiper -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="https://picsum.photos/id/1018/600/400" alt=""></div>
+        <div class="swiper-slide"><img src="https://picsum.photos/id/1015/600/400" alt=""></div>
+        <div class="swiper-slide"><img src="https://picsum.photos/id/1016/600/400" alt=""></div>
+        <div class="swiper-slide"><img src="https://picsum.photos/id/1020/600/400" alt=""></div>
+        <div class="swiper-slide"><img src="https://picsum.photos/id/1021/600/400" alt=""></div>
+        <div class="swiper-slide"><img src="https://picsum.photos/id/1025/600/400" alt=""></div>
+        <div class="swiper-slide"><img src="https://picsum.photos/id/1031/600/400" alt=""></div>
+        <div class="swiper-slide"><img src="https://picsum.photos/id/1032/600/400" alt=""></div>
+        <div class="swiper-slide"><img src="https://picsum.photos/id/1033/600/400" alt=""></div>
+        <div class="swiper-slide"><img src="https://picsum.photos/id/1035/600/400" alt=""></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    const swiper = new Swiper(".mySwiper", {
+      slidesPerView: 5,
+      centeredSlides: true,
+      loop: true,
+      spaceBetween: 40,
+      speed: 800,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+    });
+  </script>
+</body>
+</html>
