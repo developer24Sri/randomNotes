@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tricky and solve</title>
+
+  <!-- Styles -->
+
+  <link rel="stylesheet" href="./assets/styles/index.css">
+
+  <link rel="stylesheet" href="./assets/styles/responsiveness/index-responsiveness.css">
+
+  <!-- Swiper -->
+
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+  <!-- GSAP -->
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+
+</head>
+
+
+
+<body>
+
+
+
+  <!-- Navbar -->
+
+  <nav class="navbar">
+    <div class="logo">
+      <img src="./assets/images/tricky-and-solve_logo.svg" alt="triky and solve Logo">
+    </div>
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#Banner">Home</a>
+      <a href="#AboutUs">About</a>
+      <a href="#VandM">Vision</a>
+      <a href="#Materials">Study Material</a>
+      <a href="#Footer">Contact Us</a>
+      <button type="button" class="auth-btn">Login / Sign Up</button>
+    </div>
+  </nav>
+  <main id="homepage-wrapper">
+
+    <!-- Banner -->
+
+    <section class="banner" id="Banner">
+      <div class="banner-header">
+        <div class="banner-header__wrapper">
+          <p class="banner-header__mid">That Ace Your Space!</p>
+          <div class="banner-header__large">
+            <img src="./assets/images/banner-Ebook_text.svg" alt="Ebooks">
+          </div>
+          <p class="banner-header__small">Simplifying NEET Prep <span>One Chapter, One Click at a Time.</span></p>
+        </div>
+      </div>
+      <div class="banner-slides">
+        <div class="swiper bannerSwiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="bannerImg-wrapper">
+                <img class="banner-normal" src="./assets/images/banner-imgOne.png" alt="banner-img">
+              </div>
+            </div>            
+            <div class="swiper-slide">
+              <div class="bannerImg-wrapper">
+                <img class="banner-normal" src="./assets/images/banner-imgTwo.png" alt="banner-img">
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="bannerImg-wrapper">
+                <img class="banner-normal" src="./assets/images/banner-imgThree.png" alt="banner-img">
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="bannerImg-wrapper">
+                <img class="banner-normal" src="./assets/images/banner-imgFour.png" alt="banner-img">
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="bannerImg-wrapper">
+                <img class="banner-normal" src="./assets/images/banner-imgOne.png" alt="banner-img">
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="bannerImg-wrapper">
+                <img class="banner-normal" src="./assets/images/banner-imgTwo.png" alt="banner-img">
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="bannerImg-wrapper">
+                <img class="banner-normal" src="./assets/images/banner-imgThree.png" alt="banner-img">
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="bannerImg-wrapper">
+                <img class="banner-normal" src="./assets/images/banner-imgFour.png" alt="banner-img">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="banner-frame">
+        <img src="./assets/images/banner-frame.png" alt="banner-frame">
+        <div class="frame-devices">
+        </div>
+      </div>
+      <div class="banner-devices">
+        <div class="banner-mobile">
+          <div class="bannerMob-device">
+            <img src="./assets/images/preview-mobile.png" alt="">
+          </div>
+          <div class="swiper MobileSwiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img src="./assets/images/mobile-imgOne.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/mobile-imgTwo.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/mobile-imgThree.png" alt="">
+              </div>
+              <div class="swiper-slide" role="group">
+                <img src="./assets/images/mobile-imgFour.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/mobile-imgOne.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/mobile-imgTwo.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/mobile-imgThree.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/mobile-imgFour.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="banner-desktop">
+          <div class="bannerDesktop-devices">
+            <img src="./assets/images/preview-desktop.png" alt="">
+          </div>
+          <div class="swiper DesktopSwiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img src="./assets/images/desktop-imgOne.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/desktop-imgTwo.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/desktop-imgThree.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/desktop-imgFour.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/desktop-imgOne.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/desktop-imgTwo.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/desktop-imgThree.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/desktop-imgFour.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="banner-tab">
+          <div class="bannerTab-device">
+            <img src="./assets/images/preview-tablet.png" alt="tablet">
+          </div>
+          <div class="swiper TabSwiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img src="./assets/images/tablet-imgOne.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/tablet-imgTwo.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/tablet-imgThree.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/tablet-imgFour.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/tablet-imgOne.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/tablet-imgTwo.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/tablet-imgThree.png" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="./assets/images/tablet-imgFour.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="frame-content">No shipping. No waiting. Just tap in and start learning from the best-curated study
+        materials. NEET, Boards — we've got your prep covered.</p>
+    </section>
+
+    <!-- About us -->
+
+    <section class="aboutus" id="AboutUs">
+
+      <p class="aboutus-header">About us</p>
+
+      <div class="aboutus-right__imgTwo">
+
+        <img src="./assets/images/aboutus-imgTwo.webp" alt="aboutus image">
+
+      </div>
+
+      <div class="aboutus-wrapper">
+
+        <div class="aboutus-left">
+
+          <div class="aboutus-left__headers">
+
+            <p class="aboutus-left__headersTwo">Built for Learners.</p>
+
+            <p class="aboutus-left__headersTwo">Backed by Experts</p>
+
+          </div>
+
+          <p class="aboutus-left__content">
+
+            Tricky &amp; Solve is a student-first initiative dedicated to helping NEET-UG aspirants succeed with
+            confidence.
+
+            Since 2019, we've supported thousands of students through our physical mock test books, and now we're
+
+            stepping into the digital space with affordable, high-quality e-books for Biology, Physics, and Chemistry.
+
+          </p>
+
+          <p class="aboutus-left__content">
+
+            Designed for self-paced learning and built with clarity in mind, our content is tailored to make complex
+
+            concepts simple — so students can focus on what truly matters: understanding, revising, and excelling.
+
+          </p>
+
+        </div>
+
+        <div class="aboutus-right">
+
+          <div class="aboutus-right__imgOne">
+
+            <img src="./assets/images/aboutus-imgOne.webp" alt="aboutus image">
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+      <div class="aboutus-footer">
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 100" width="100%">
+
+          <path
+            d="M 0 50 Q 53.33 50 106.67 25 Q 213.33 -25 320 25 Q 373.33 50 426.67 50 Q 480 50 533.33 25 Q 640 -25 746.67 25 Q 800 50 853.33 50 Q 906.67 50 960 25 Q 1066.67 -25 1173.33 25 Q 1226.67 50 1280 50 Q 1333.33 50 1386.67 25 Q 1493.33 -25 1600 25 Q 1653.33 50 1706.67 50 L 1280 100 L 0 100 Z"
+            fill="#ffffff"></path>
+
+        </svg>
+
+      </div>
+
+    </section>
+
+    <!-- V and M -->
+
+    <section class="vandm" id="VandM">
+
+      <div class="vandm-wrapper">
+
+        <div class="vandm-left">
+
+          <img src="./assets/images/visionAndmission-img.png" alt="vision and mission">
+
+        </div>
+
+        <div class="vandm-right">
+
+          <p class="vandm-right__header">Empowering NEET Aspirants</p>
+
+          <div class="vandm-right__sub">
+
+            <p class="vandm-sub__header">Vision</p>
+
+            <p class="vandm-content">To become the most trusted and affordable learning companion for NEET-UG aspirants
+
+              within and across India, empowering every student—regardless of background or board—to dream big and
+
+              achieve success through simplified, accessible, and high-quality study material.</p>
+
+          </div>
+
+          <div class="vandm-right__sub">
+
+            <p class="vandm-sub__header">Mission</p>
+
+            <p class="vandm-content">"At Tricky &amp; Solve, we bridge the gap between quality education and
+              affordability.
+
+              Since 2019, we’ve supported students with mock test books, and now with our first digital launch, we offer
+
+              concise, exam-focused e-books in Biology, Physics, and Chemistry—making NEET-UG preparation smarter and
+
+              more accessible."</p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Study Materials -->
+
+    <section class="materials" id="Materials">
+      <div class="materials-header">
+        <p class="materials-header__sub">Study Materials</p>
+        <p class="materials-header__main">eBooks! The best purchase you'll never regret.</p>
+      </div>
+      <div class="materials-gallery">
+        <div class="materials-sub">
+          <div class="materials-subImg">
+            <img src="./assets/images/materials-imgOne.png" alt="study material">
+          </div>
+          <div class="materials-info">
+            <p class="material-name">NEET - UG Physics</p>
+            <p class="material-author">T.Ushasailaja</p>
+            <button class="material-buy" type="button">Buy Now</button>
+          </div>
+        </div>
+        <div class="materials-sub">
+          <div class="materials-subImg">
+            <img src="./assets/images/materials-imgTwo.png" alt="study material">
+          </div>
+          <div class="materials-info">
+            <p class="material-name">NEET - UG Biology</p>
+            <p class="material-author">T.Ushasailaja</p>
+            <button class="material-buy" type="button">Buy Now</button>
+          </div>
+        </div>
+        <div class="materials-sub">
+          <div class="materials-subImg">
+            <img src="./assets/images/materials-imgThree.png" alt="study material">
+          </div>
+          <div class="materials-info">
+            <p class="material-name">NEET - UG Mock Test</p>
+            <p class="material-author">T.Ushasailaja</p>
+            <button class="material-buy" type="button">Buy Now</button>
+          </div>
+        </div>
+        <div class="materials-sub">
+          <div class="materials-subImg">
+            <img src="./assets/images/materials-imgFour.png" alt="study material">
+          </div>
+          <div class="materials-info">
+            <p class="material-name">NEET - UG Chemistry</p>
+            <p class="material-author">T.Ushasailaja</p>
+            <button class="material-buy" type="button">Buy Now</button>
+          </div>
+        </div>
+        <div class="materials-sub">
+          <div class="materials-subImg">
+            <img src="./assets/images/materials-imgOne.png" alt="study material">
+          </div>
+          <div class="materials-info">
+            <p class="material-name">NEET - UG Physics</p>
+            <p class="material-author">T.Ushasailaja</p>
+            <button class="material-buy" type="button">Buy Now</button>
+          </div>
+        </div>
+        <div class="materials-sub">
+          <div class="materials-subImg">
+            <img src="./assets/images/materials-imgTwo.png" alt="study material">
+          </div>
+          <div class="materials-info">
+            <p class="material-name">NEET - UG Biology</p>
+            <p class="material-author">T.Ushasailaja</p>
+            <button class="material-buy" type="button">Buy Now</button>
+          </div>
+        </div>
+        <div class="materials-sub">
+          <div class="materials-subImg">
+            <img src="./assets/images/materials-imgThree.png" alt="study material">
+          </div>
+          <div class="materials-info">
+            <p class="material-name">NEET - UG Mock Test</p>
+            <p class="material-author">T.Ushasailaja</p>
+            <button class="material-buy" type="button">Buy Now</button>
+          </div>
+        </div>
+        <div class="materials-sub">
+          <div class="materials-subImg">
+            <img src="./assets/images/materials-imgFour.png" alt="study material">
+          </div>
+          <div class="materials-info">
+            <p class="material-name">NEET - UG Chemistry</p>
+            <p class="material-author">T.Ushasailaja</p>
+            <button class="material-buy" type="button">Buy Now</button>
+          </div>
+        </div>  
+      </div>
+      <p class="materials-footer">View More</p>
+    </section>
+
+    <!-- Why choose us -->
+
+    <section class="wcu">
+
+      <div class="wcu-wrapper">
+
+        <div class="wcu-header">
+
+          <p class="wcu-sub-header">Why Choose Us</p>
+
+          <div class="wcu-dropcap">
+
+            <div class="wcu-dropcapSub">
+
+              <p>Where</p>
+
+              <p>Meets</p>
+
+            </div>
+
+            <div class="wcu-dropcapMain">
+
+              <p>PRE</p>
+
+            </div>
+
+            <div class="wcu-dropcapSub">
+
+              <p>paration</p>
+
+              <p>cision</p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="wcu-cards">
+
+          <div class="wcu-card" data-offset-rot="4"
+            style="translate: none; rotate: none; scale: none; transform: rotate(4deg);">
+
+            <div class="wcu-pin">
+
+              <div class="pinWpr">
+
+                <img src="./assets/images/wcu-understand.png" alt="easy to understand">
+
+              </div>
+
+            </div>
+
+            <div class="wcu-cardCont">
+
+              <p class="card-header">Easy to Understanding</p>
+
+              <p class="card-para">Our content is clear, concise, and beginner-friendly — ideal for building strong
+                foundations in Biology, Physics, and Chemistry, regardless of your school board.</p>
+
+            </div>
+
+          </div>
+
+          <div class="wcu-card" data-offset-rot="-5" data-offset-y="13.1"
+            style="translate: none; rotate: none; scale: none; transform: rotate(-5deg);">
+
+            <div class="wcu-pin">
+
+              <div class="pinWpr">
+
+                <img src="./assets/images/wcu-neet.png" alt="NEET focued">
+
+              </div>
+
+            </div>
+
+            <div class="wcu-cardCont">
+
+              <p class="card-header">NEET-Focused Content</p>
+
+              <p class="card-para">Each e-book is designed to align with the NEET-UG syllabus, covering high-yield
+                concepts and questions to help students focus on what matters most.</p>
+
+            </div>
+
+          </div>
+
+          <div class="wcu-card" data-offset-rot="6"
+            style="translate: none; rotate: none; scale: none; transform: rotate(6deg);">
+
+            <div class="wcu-pin">
+
+              <div class="pinWpr">
+
+                <img src="./assets/images/wcu-anytime.png" alt="anytime and anywhere">
+
+              </div>
+
+            </div>
+
+            <div class="wcu-cardCont">
+
+              <p class="card-header">Learn Anytime, Anywhere</p>
+
+              <p class="card-para">Access your e-books instantly from any device. No waiting, no shipping — just instant
+                preparation at your fingertips.</p>
+
+            </div>
+
+          </div>
+
+          <div class="wcu-card" data-offset-rot="-6"
+            style="translate: none; rotate: none; scale: none; transform: rotate(-6deg);">
+
+            <div class="wcu-pin">
+
+              <div class="pinWpr">
+
+                <img src="./assets/images/wcu-budget.png" alt="budget friendly">
+
+              </div>
+
+            </div>
+
+            <div class="wcu-cardCont">
+
+              <p class="card-header">Budget-Friendly, Student-First</p>
+
+              <p class="card-para">We believe quality education shouldn't be expensive. Our e-books are priced
+                affordably ₹125 – ₹225 per subject. So every student gets study material without financial burden.</p>
+
+            </div>
+
+          </div>
+
+          <div class="wcu-card" data-offset-rot="8" data-offset-y="13.1"
+            style="translate: none; rotate: none; scale: none; transform: rotate(8deg);">
+
+            <div class="wcu-pin">
+
+              <div class="pinWpr">
+
+                <img src="./assets/images/wcu-truested.png" alt="trusted since 2019">
+
+              </div>
+
+            </div>
+
+            <div class="wcu-cardCont">
+
+              <p class="card-header">Trusted since <span>2019</span></p>
+
+              <p class="card-para">With years of experience providing physical mock test books, we've already helped
+                thousands of students prepare smartly. This digital leap brings that same trust online.</p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Footer -->
+
+    <footer class="footer" id="Footer">
+
+      <div class="footer-wrapper">
+
+        <div class="footer-main">
+
+          <div class="footer-sub">
+
+            <div class="footer-logoWrapper">
+
+              <img src="./assets/images/tricky-and-solve-footer-logo.svg" alt="footer logo">
+
+            </div>
+
+            <p class="footer-para">
+
+              Tricky &amp; Solve was founded in 2019 with a mission to make NEET-UG preparation more affordable and
+              accessible through digital e-books and smart learning resources.
+
+            </p>
+
+          </div>
+
+          <div class="footer-sub">
+
+            <p class="footer-header">Our Company</p>
+
+            <ul class="footer-list">
+
+              <li class="footer-links"><a href="http://www.devdews.com/beta/tricky&amp;solve/new/index.html#"></a>Home
+              </li>
+
+              <li class="footer-links"><a href="http://www.devdews.com/beta/tricky&amp;solve/new/index.html#"></a>About
+                Us</li>
+
+              <li class="footer-links"><a href="http://www.devdews.com/beta/tricky&amp;solve/new/index.html#"></a>Vision
+              </li>
+
+              <li class="footer-links"><a href="http://www.devdews.com/beta/tricky&amp;solve/new/index.html#"></a>Terms
+                &amp; Conditions</li>
+
+              <li class="footer-links"><a
+                  href="http://www.devdews.com/beta/tricky&amp;solve/new/index.html#"></a>Privacy Policy</li>
+
+            </ul>
+
+          </div>
+
+          <div class="footer-sub">
+
+            <p class="footer-header">Follow us</p>
+
+            <ul class="footer-list">
+
+              <li class="footer-links"><a
+                  href="http://www.devdews.com/beta/tricky&amp;solve/new/index.html#"></a>Instagram</li>
+
+              <li class="footer-links"><a
+                  href="http://www.devdews.com/beta/tricky&amp;solve/new/index.html#"></a>Twitter</li>
+
+              <li class="footer-links"><a
+                  href="http://www.devdews.com/beta/tricky&amp;solve/new/index.html#"></a>Facebook</li>
+
+            </ul>
+
+          </div>
+
+          <div class="footer-sub">
+
+            <p class="footer-header">Contact us</p>
+
+            <div class="footer-subWpr">
+
+              <ul class="footer-list">
+
+                <li class="footer-links">
+
+                  <a
+                    href="http://www.devdews.com/beta/tricky&amp;solve/new/index.html#">trickyandsolve.ipl@gmail.com</a>
+
+                </li>
+
+                <li class="footer-links">
+
+                  044-24780060
+
+                </li>
+
+                <li class="footer-links">
+
+                  Door 20, Thoopu Street, Natham,Kundrathur post, Kundrathur Taluk Chennai 600069, TN, IN
+
+                </li>
+
+              </ul>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <p class="footer-btm">Copyrights © Tricky &amp; Solve 2025. All Rights Reserved</p>
+
+      </div>
+
+      <!-- GoTo-Top -->
+
+      <div class="goto">
+
+        <div class="gotoWpr">
+
+          <a href="http://www.devdews.com/beta/tricky&amp;solve/new/index.html#Banner"><img
+              src="./assets/images/gotoTop-icon.png" alt="goto-top"></a>
+
+        </div>
+
+      </div>
+
+    </footer>
+
+  </main>
+
+  <script src="./assets/script/index.js"></script>
+
+  <!-- Swiper JS -->
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script src="./assets/script/swiperConfig.js"></script>
+
+
+
+
+
+
+
+</body>
+
+</html>

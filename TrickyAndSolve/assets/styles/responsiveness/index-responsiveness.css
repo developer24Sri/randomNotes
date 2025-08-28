@@ -1,0 +1,68 @@
+@media (max-width: 1366px) {
+
+  /* #homepage-wrapper {
+    padding-top: 85px;
+}  */
+
+  .bannerImg-wrapper {
+    width: 50%;
+  }
+
+  .banner .banner-frame {
+    top: 59%;
+  }
+
+      .banner .frame-content {
+        top: 74%;
+        font-size: var(--fs18);
+    }
+
+    .banner .banner-devices {
+      top: 55%;
+    }
+
+    #homepage-wrapper .wcu .wcu-wrapper .wcu-card {
+      height: 465px;
+    }
+
+}
+
+@media (max-width: 1280px) {
+      .banner .banner-frame {
+        top: 58%;
+    }
+
+        .banner .frame-content {
+        top: 72%;
+        font-size: var(--fs18);
+    }
+
+    #homepage-wrapper .aboutus .aboutus-wrapper .aboutus-right .aboutus-right__imgOne {
+      margin-left: 75px;
+    }
+}
+
+@media (max-width: 1024px) {
+      .navbar .hamburger {
+        display: flex;
+      }
+
+      .navbar .nav-links {
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: #333;
+        width: 100%;
+        padding: 10px 0;
+        display: none;
+      }
+
+      .navbar .nav-links.open {
+        display: flex;
+      }
+
+      .navbar .nav-links a {
+        padding: 10px 20px;
+      }
+    }
