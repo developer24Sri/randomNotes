@@ -750,31 +750,31 @@
     }
 
     #homepage-wrapper .wcu .wcu-wrapper .wcu-card:first-child {
-        background-color: var(--cardColorOne);
+        background-color: var(--cardColorOne) !important;
         color: var(--white);
         z-index: 3;
     }
 
     #homepage-wrapper .wcu .wcu-wrapper .wcu-card:nth-child(2) {
-        background-color: var(--cardColorTwo);
+        background-color: var(--cardColorTwo) !important;
         z-index: 7;
         /* border-bottom: 1px solid var(--black); */
     }
 
     #homepage-wrapper .wcu .wcu-wrapper .wcu-card:nth-child(3) {
-        background-color: var(--cardColorThree);
+        background-color: var(--cardColorThree) !important;
         z-index: 6;
         /* border-bottom: 1px solid var(--black); */
     }
 
     #homepage-wrapper .wcu .wcu-wrapper .wcu-card:nth-child(4) {
-        background-color: var(--cardColorFour);
+        background-color: var(--cardColorFour) !important;
         color: var(--white);
         z-index: 7;
     }
 
     #homepage-wrapper .wcu .wcu-wrapper .wcu-card:nth-child(5) {
-        background-color: var(--cardColorFive);
+        background-color: var(--cardColorFive) !important;
         z-index: 7;
         /* border-bottom: 1px solid var(--black); */
     }

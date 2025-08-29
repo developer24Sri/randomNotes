@@ -170,93 +170,135 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Why Choose Us:
 const cards = document.querySelectorAll(".wcu-card");
-  const container = document.querySelector(".wcu-cards");
-  const elastic = { ease: "elastic.out(1, 0.75)", duration: 0.8 };
+const container = document.querySelector(".wcu-cards");
+const elastic = { ease: "elastic.out(1, 0.75)", duration: 0.8 };
 
-  // Store and apply initial rotation + initial vertical offset (yPercent)
-  cards.forEach(card => {
-    const rot = parseFloat(card.dataset.offsetRot) || 0;
-    const initY = parseFloat(card.dataset.offsetY); // may be NaN if not set
-    card._initRot = rot;
-    // store numeric initial Y (use 0 if missing)
-    card._initY = isNaN(initY) ? 0 : initY;
-    // apply initial state
-    gsap.set(card, { rotation: rot, yPercent: card._initY });
+let isDisabled = window.innerWidth <= 576;
+let lastIndex = -1;
+
+// setup initial state
+cards.forEach(card => {
+  const rot = parseFloat(card.dataset.offsetRot) || 0;
+  const initY = parseFloat(card.dataset.offsetY);
+  card._initRot = rot;
+  card._initY = isNaN(initY) ? 0 : initY;
+
+  gsap.set(card, { 
+    rotation: isDisabled ? 0 : rot, 
+    yPercent: isDisabled ? 0 : card._initY,
+    xPercent: 0,
+    scale: 1
   });
+});
 
-  let lastIndex = -1;
-
+// disable animation logic if <=576px
+if (!isDisabled) {
   container.addEventListener("pointermove", e => {
     const rect = container.getBoundingClientRect();
     let percentage = (e.clientX - rect.left) / rect.width;
-    if (percentage < 0) percentage = 0;
-    if (percentage > 1) percentage = 1;
+    percentage = Math.min(Math.max(percentage, 0), 1);
 
     let index = Math.floor(percentage * cards.length);
-    if (index >= cards.length) index = cards.length - 1;
-    if (index < 0) index = 0;
+    index = Math.min(Math.max(index, 0), cards.length - 1);
 
-    if (index === lastIndex) return; // throttle identical calls
+    if (index === lastIndex) return;
     lastIndex = index;
     newPortion(index);
   });
 
-  // pointerleave will fire for mouse/touch pointer leaving the container
   container.addEventListener("pointerleave", () => {
     lastIndex = -1;
     resetAll();
   });
+}
 
-  function resetAll() {
-    cards.forEach(card => {
-      // stop any in-flight tweens for this card to avoid "stuck" visual states
-      gsap.killTweensOf(card);
+function resetAll() {
+  if (isDisabled) return; // do nothing for <=576px
+  cards.forEach(card => {
+    gsap.killTweensOf(card);
+    gsap.to(card, {
+      rotation: card._initRot,
+      xPercent: 0,
+      yPercent: card._initY,
+      scale: 1,
+      overwrite: true,
+      ...elastic
+    });
+  });
+}
+
+function newPortion(i) {
+  if (isDisabled) return; // do nothing for <=576px
+  cards.forEach((card, idx) => {
+    gsap.killTweensOf(card);
+
+    if (idx === i) {
       gsap.to(card, {
-        rotation: card._initRot,
+        rotation: 0,
         xPercent: 0,
-        yPercent: card._initY, // return to the initial baseline (important)
+        scale: 1.1,
+        overwrite: true,
+        ...elastic
+      });
+    } else {
+      const x = 50 / (idx - i);
+      const customY = parseFloat(card.dataset.offsetY);
+      const baseY = !isNaN(customY) ? customY : card._initY || 0;
+      const deltaY = (idx - i) * 5;
+      const y = baseY + deltaY;
+
+      gsap.to(card, {
+        xPercent: x,
+        yPercent: y,
         scale: 1,
         overwrite: true,
         ...elastic
       });
-    });
-  }
+    }
+  });
+}
 
-  function newPortion(i) {
-    cards.forEach((card, idx) => {
-      // stop existing tweens so new animation is clean
+// listen for resize so behavior updates dynamically
+window.addEventListener("resize", () => {
+  isDisabled = window.innerWidth <= 576;
+  if (isDisabled) {
+    // clear transforms & stop tweens
+    cards.forEach(card => {
       gsap.killTweensOf(card);
-
-      if (idx === i) {
-        // active card: straighten + enlarge
-        gsap.to(card, {
-          rotation: 0,
-          xPercent: 0,
-          scale: 1.1,
-          overwrite: true,
-          ...elastic
-        });
-      } else {
-        // non-active cards: spread out horizontally + vertical baseline + delta
-        // horizontal offset (percent)
-        const x = 50 / (idx - i);
-
-        // baseline: prefer dataset value if present, otherwise use stored init
-        const customY = parseFloat(card.dataset.offsetY);
-        const baseY = !isNaN(customY) ? customY : card._initY || 0;
-
-        // additional delta so non-active cards also move relative to the active index
-        const deltaY = (idx - i) * 5;
-        const y = baseY + deltaY;
-
-        gsap.to(card, {
-          xPercent: x,
-          yPercent: y,
-          scale: 1,
-          overwrite: true,
-          ...elastic
-        });
-      }
+      gsap.set(card, { rotation: 0, xPercent: 0, yPercent: 0, scale: 1 });
     });
+  } else {
+    resetAll();
   }
+});
 
+//stacked cards:
+gsap.registerPlugin(ScrollTrigger);
+
+const WCUcards = gsap.utils.toArray(".wcu-card");
+
+WCUcards.forEach((card, index) => {
+  card.style.zIndex = WCUcards.length - index; // ✅ fixed here
+
+  gsap.to(card, {
+    scrollTrigger: {
+      trigger: card,
+      start: "top bottom-=100",
+      end: "top top-=100",
+      scrub: true,
+      invalidateOnRefresh: true
+    },
+    ease: "none",
+    scale: 1 - (WCUcards.length - index) * 0.025 // ✅ fixed here
+  });
+
+  ScrollTrigger.create({
+    trigger: card,
+    start: "top top+=40",
+    pin: true,
+    pinSpacing: false,
+    id: "pin" + index,
+    end: "max",
+    invalidateOnRefresh: true,
+  });
+});

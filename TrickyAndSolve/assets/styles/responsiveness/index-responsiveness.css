@@ -66,3 +66,23 @@
         padding: 10px 20px;
       }
     }
+
+    @media (max-width: 576px) {
+       #homepage-wrapper .wcu .wcu-wrapper .wcu-cards {
+      width: 95%;
+      flex-wrap: wrap;
+  }
+
+  #homepage-wrapper .wcu .wcu-wrapper .wcu-card {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  /* keep your positioning overrides */
+  .wcu-card:nth-child(1) { top: 0; }
+  .wcu-card:nth-child(2) { top: 140px; }
+  .wcu-card:nth-child(3) { top: 280px; }
+  .wcu-card:nth-child(4) { top: 420px; }
+  .wcu-card:nth-child(5) { top: 560px; }
+
+    }
