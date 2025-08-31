@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Typography & Spacing</title>
+  <style>
+    /* 1. Base scaling for easy rem calculation */
+html {
+  font-size: 62.5%; /* 1rem = 10px (easier math) */
+}
+
+/* 2. Design tokens */
+:root {
+  /* Font Sizes (capped at Figma px sizes) */
+  --fs-h1: clamp(28px, 2vw, 40px);
+  --fs-h2: clamp(20px, 1.5vw, 25px);
+  --fs-body: clamp(16px, 1vw, 18px);
+
+  /* Spacing scale (matches Figma values at 1920px) */
+ --space-xs: clamp(4px, 0.5vw, 8px);
+  --space-sm: clamp(8px, 0.8vw, 16px);
+   --space-md: clamp(16px, 1vw, 24px);
+    --space-lg: clamp(24px, 1.5vw, 32px); 
+ --space-xl: clamp(32px, 2vw, 64px);
+}
+
+/* 3. Global resets */
+body {
+  margin: 0;
+  font-family: sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: #333;
+}
+
+/* 4. Layout example */
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  padding: var(--space-xl);
+  align-items: center;
+}
+
+.hero-content {
+  flex: 1 1 50%;
+}
+
+.hero-content h1 {
+  font-size: var(--fs-h1);
+  margin-bottom: var(--space-md);
+}
+
+.hero-content h2 {
+  font-size: var(--fs-h2);
+  margin-bottom: var(--space-sm);
+}
+
+.hero-content p {
+  font-size: var(--fs-body);
+  margin-top: var(--space-md);
+}
+
+.hero-image {
+  flex: 1 1 50%;
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Main Header (40px in Figma)</h1>
+      <h2>Sub Heading (25px in Figma)</h2>
+      <h2>Sub Heading 2</h2>
+      <h2>Sub Heading 3</h2>
+      <p>
+        This is a paragraph of text. In Figma it was 18px.  
+        With clamp it adapts smoothly across screen sizes.
+      </p>
+    </div>
+    <div class="hero-image">
+      <img src="https://placehold.co/600x400" alt="Sample Image">
+    </div>
+  </section>
+</body>
+</html>

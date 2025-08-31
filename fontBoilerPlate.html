@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 1) Optional: 62.5% makes 1rem = 10px (easy math for spacing).
+   (Font tokens below use px+vw so they do NOT depend on this.) */
+html { font-size: 62.5%; }
+
+/* 2) Line-height / letter-spacing helpers (tweak if you like) */
+:root {
+  --lh-tight: 1.15;
+  --lh-snug: 1.25;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.7;
+
+  --ls-tight: -0.01em; /* for large headings */
+  --ls-normal: 0;
+  --ls-wide: 0.02em;   /* for overlines/caps */
+}
+
+/* 3) FONT SCALE (No media queries)
+   Rule: clamp(MINpx, (FigmaPx / 19.2)vw, FigmaPx)
+   - 19.2 because at 1920px width: 1vw = 19.2px.
+   - MIN chosen for readability. MAX equals Figma @ 1920.
+*/
+
+/* Big displays */
+:root {
+  /* Ultra display levels */
+  --fs-hero:    clamp(72px, 8.8542vw, 170px); /* Figma 170 */
+  --fs-banner:  clamp(48px, 5vw,      96px);  /* Figma 96  */
+  --fs-display: clamp(36px, 3.75vw,   72px);  /* Figma 72  */
+
+  /* Headings (map to your semantic H1–H6 or custom “heading/subheading” names) */
+  --fs-h1: clamp(28px, 2.0833vw, 40px); /* Figma 40 */
+  --fs-h2: clamp(24px, 1.6667vw, 32px); /* Figma 32 */
+  --fs-h3: clamp(20px, 1.25vw,   24px); /* Figma 24 */
+  --fs-h4: clamp(18px, 1.0417vw, 20px); /* Figma 20 */
+  --fs-h5: clamp(16px, 0.9375vw, 18px); /* Figma 18 */
+  --fs-h6: clamp(14px, 0.8333vw, 16px); /* Figma 16 */
+
+  /* Body text */
+  --fs-lead: clamp(16px, 1.0417vw, 20px); /* Figma ~20 (intro/lead) */
+  --fs-body: clamp(16px, 0.9375vw, 18px); /* Figma 18 main body */
+
+  /* Small text (never below 12px) */
+  --fs-small:    clamp(12px, 0.7292vw, 14px); /* helper */
+  --fs-caption:  clamp(12px, 0.625vw,  12px); /* stays ~12 on desktop */
+  --fs-overline: clamp(12px, 0.625vw,  12px); /* stays ~12 on desktop */
+}
+
+/* 4) Utility classes (optional but handy) */
+.text-hero    { font-size: var(--fs-hero);    line-height: var(--lh-tight);  letter-spacing: var(--ls-tight); }
+.text-banner  { font-size: var(--fs-banner);  line-height: var(--lh-tight);  letter-spacing: var(--ls-tight); }
+.text-display { font-size: var(--fs-display); line-height: var(--lh-tight);  letter-spacing: var(--ls-tight); }
+
+.text-h1 { font-size: var(--fs-h1); line-height: var(--lh-snug);   letter-spacing: var(--ls-tight); }
+.text-h2 { font-size: var(--fs-h2); line-height: var(--lh-snug);   letter-spacing: var(--ls-tight); }
+.text-h3 { font-size: var(--fs-h3); line-height: var(--lh-normal); letter-spacing: var(--ls-normal); }
+.text-h4 { font-size: var(--fs-h4); line-height: var(--lh-normal); letter-spacing: var(--ls-normal); }
+.text-h5 { font-size: var(--fs-h5); line-height: var(--lh-normal); letter-spacing: var(--ls-normal); }
+.text-h6 { font-size: var(--fs-h6); line-height: var(--lh-normal); letter-spacing: var(--ls-normal); }
+
+.text-lead   { font-size: var(--fs-lead); line-height: var(--lh-relaxed); }
+.text-body   { font-size: var(--fs-body); line-height: var(--lh-relaxed); }
+.text-small  { font-size: var(--fs-small); line-height: var(--lh-relaxed); }
+.text-caption{ font-size: var(--fs-caption); line-height: var(--lh-relaxed); }
+.text-overline{
+  font-size: var(--fs-overline);
+  line-height: var(--lh-relaxed);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+}
+
+/* 5) Optional element defaults (semantic mapping) */
+h1 { font: inherit; }
+h2 { font: inherit; }
+h3 { font: inherit; }
+h4 { font: inherit; }
+h5 { font: inherit; }
+h6 { font: inherit; }
+p  { font: inherit; }
+
+
+    </style>
+</head>
+<body>
+    <!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fluid Font Scale – No Media Queries</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .row  { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; }
+    .card { padding: 2rem; border: 1px solid #e5e7eb; border-radius: 12px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="text-banner">Banner / Hero Area</div>
+    <div class="text-h1" style="margin-top:1rem;">Section Heading (H1)</div>
+    <p class="text-lead">Lead paragraph to introduce the section with slightly larger body text.</p>
+
+    <div class="row" style="margin-top:2rem;">
+      <div class="card">
+        <div class="text-h2">Sub Heading 1</div>
+        <p class="text-body">Regular paragraph content. Resize the viewport; sizes will fluidly shrink but cap at Figma values on large screens.</p>
+        <div class="text-caption">Caption text</div>
+      </div>
+      <div class="card">
+        <div class="text-h3">Sub Heading 2</div>
+        <p class="text-body">You can use the utility classes or assign the variables directly to components.</p>
+        <div class="text-overline">OVERLINE</div>
+      </div>
+    </div>
+
+    <div class="text-display" style="margin-top:3rem;">Display Example</div>
+    <p class="text-small">Small helper text (never below 12px).</p>
+  </div>
+</body>
+</html>
+
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boiler Plate</title>
+    <style>
+        /* ============================ 1. CSS RESET ============================ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-smooth: always;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+            border: none;
+            outline: none;
+            background: none;
+        }
+
+        img,
+        picture,
+        video,
+        canvas,
+        svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+
+        /* ============================ 2. FONT FAMILY SETUP ============================ */
+        @font-face {
+            font-family: "fontOne-Regular";
+            src: url("../fonts/fontOne/static/YourFont-Regular.ttf");
+        }
+
+        @font-face {
+            font-family: "fontOne-Medium";
+            src: url("../fonts/fontOne/static/YourFont-Medium.ttf");
+        }
+
+        @font-face {
+            font-family: "fontOne-SemiBold";
+            src: url("../fonts/fontOne/static/YourFont-SemiBold.ttf");
+        }
+
+        @font-face {
+            font-family: "fontTwo-Regular";
+            src: url("../fonts/fontTwo/YourFont.ttf");
+        }
+
+        @font-face {
+            font-family: "fontThree-Regular";
+            src: url("../fonts/fontThree/YourFont-Regular.ttf");
+        }
+
+        @font-face {
+            font-family: "fontThree-Medium";
+            src: url("../fonts/fontThree/YourFont-Medium.ttf");
+        }
+
+        body {
+            font-family: "fontOne-Regular", sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+        }
+
+
+        /* ============================ 3. DESIGN TOKENS ============================ */
+        :root {
+            /* ---- Colors ---- */
+            --color-bg: #ffffff;
+            --color-text: #1a1a1a;
+            --color-primary: #007bff;
+            --color-secondary: #6c757d;
+            --color-accent: #ff5722;
+            --color-border: #e0e0e0;
+
+            /* ---- Spacing Scale ---- */
+            --space-xs: clamp(4px, 0.5vw, 8px);
+            --space-sm: clamp(8px, 0.8vw, 16px);
+            --space-md: clamp(16px, 1vw, 24px);
+            --space-lg: clamp(24px, 1.5vw, 32px);
+            --space-xl: clamp(32px, 2vw, 64px);
+
+            /* ---- Font Size Scale ---- */
+            --fs-hero: clamp(72px, 8.8vw, 170px);
+            --fs-banner: clamp(48px, 5vw, 96px);
+            --fs-display: clamp(36px, 3.75vw, 72px);
+
+            --fs-h1: clamp(28px, 2.08vw, 40px);
+            --fs-h2: clamp(24px, 1.66vw, 32px);
+            --fs-h3: clamp(20px, 1.25vw, 24px);
+            --fs-h4: clamp(18px, 1.04vw, 20px);
+            --fs-h5: clamp(16px, 0.94vw, 18px);
+            --fs-h6: clamp(14px, 0.83vw, 16px);
+
+            --fs-lead: clamp(16px, 1.04vw, 20px);
+            --fs-body: clamp(16px, 0.94vw, 18px);
+
+            --fs-small: clamp(12px, 0.72vw, 14px);
+            --fs-caption: clamp(12px, 0.625vw, 12px);
+            --fs-overline: clamp(12px, 0.625vw, 12px);
+
+            /* ---- Line Heights ---- */
+            --lh-tight: 1.2;
+            /* for display/hero text ex: 120% */
+            --lh-normal: 1.4;
+            /* for headings ex: 140% */
+            --lh-relaxed: 1.6;
+            /* for body paragraphs ex: 160% */
+        }
+
+
+        /* ============================ 4. TYPOGRAPHY UTILITIES ============================ */
+        h1 {
+            font-size: var(--fs-h1);
+            font-family: "fontOne-SemiBold", sans-serif;
+            line-height: var(--lh-normal);
+        }
+
+        h2 {
+            font-size: var(--fs-h2);
+            font-family: "fontOne-SemiBold", sans-serif;
+            line-height: var(--lh-normal);
+        }
+
+        h3 {
+            font-size: var(--fs-h3);
+            font-family: "fontOne-Medium", sans-serif;
+            line-height: var(--lh-normal);
+        }
+
+        h4 {
+            font-size: var(--fs-h4);
+            line-height: var(--lh-normal);
+        }
+
+        h5 {
+            font-size: var(--fs-h5);
+            line-height: var(--lh-normal);
+        }
+
+        h6 {
+            font-size: var(--fs-h6);
+            line-height: var(--lh-normal);
+        }
+
+        p {
+            font-size: var(--fs-body);
+            font-family: "fontOne-Regular", sans-serif;
+            line-height: var(--lh-relaxed);
+        }
+
+        small,
+        .caption {
+            font-size: var(--fs-small);
+            line-height: var(--lh-tight);
+        }
+
+
+        /* ============================ 5. SPACING UTILITIES ============================ */
+        .spacing-xs {
+            margin: var(--space-xs);
+        }
+
+        .spacing-sm {
+            margin: var(--space-sm);
+        }
+
+        .spacing-md {
+            margin: var(--space-md);
+        }
+
+        .spacing-lg {
+            margin: var(--space-lg);
+        }
+
+        .spacing-xl {
+            margin: var(--space-xl);
+        }
+
+        .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-lg);
+    }
+
+    .grid {
+      display: grid;
+      gap: var(--space-lg);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .card {
+      background: var(--clr-card-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: 12px;
+      padding: var(--space-md);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      font-family: var(--ff-heading);
+      font-size: var(--fs-h3);
+      margin-bottom: var(--space-sm);
+      color: var(--clr-primary);
+    }
+
+    .card p {
+      font-size: var(--fs-body);
+      margin-bottom: var(--space-sm);
+      font-family: var(--ff-alt);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: var(--space-xs) var(--space-md);
+      font-size: var(--fs-small);
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: var(--clr-primary);
+      color: white;
+      font-family: var(--ff-base);
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: var(--clr-secondary);
+    }
+
+    /* ---------------- HEADER ---------------- */
+    header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    header h1 {
+      font-size: var(--fs-hero);
+      font-family: var(--ff-heading);
+      color: var(--clr-secondary);
+      margin-bottom: var(--space-sm);
+    }
+
+    header p {
+      font-size: var(--fs-body);
+      font-family: var(--ff-alt);
+      color: #374151;
+    }
+    </style>
+</head>
+
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Boilerplate Test</title>
+    </head>
+
+    <body>
+
+        <header class="container">
+    <h1>Design System Boilerplate</h1>
+    <p>See how our spacing, fonts, and colors work together 🎨</p>
+  </header>
+
+  <main class="container">
+    <section class="grid">
+      <div class="card">
+        <h3>Card One</h3>
+        <p>This card shows our <b>body font</b> and proper spacing between elements.</p>
+        <button class="btn">Learn More</button>
+      </div>
+
+      <div class="card">
+        <h3>Card Two</h3>
+        <p>Using <i>Alice</i> for headings, and <i>dmSans</i> for body text. Fonts switch seamlessly.</p>
+        <button class="btn">Explore</button>
+      </div>
+
+      <div class="card">
+        <h3>Card Three</h3>
+        <p>Spacing comes from our <b>--space-md</b> & <b>--space-lg</b> tokens.</p>
+        <button class="btn">Start Now</button>
+      </div>
+    </section>
+  </main>
+
+    </body>
+
+    </html>
+
+</body>
+
+</html>

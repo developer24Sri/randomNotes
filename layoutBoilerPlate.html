@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fluid Typography & Spacing Demo</title>
+  <style>
+    /* Step 1: Fluid root font size */
+    html {
+      font-size: clamp(14px, 1vw + 0.5rem, 18px);
+    }
+
+    /* Step 2: Spacing scale (based on rem, which is fluid now) */
+    :root {
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 1rem;
+      --space-4: 2rem;
+      --space-5: 4rem;
+      --space-6: 6rem;
+    }
+
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      line-height: 1.5;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    /* Step 3: Fluid typography */
+    h1 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      margin-bottom: var(--space-3);
+    }
+
+    p {
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      margin-bottom: var(--space-4);
+    }
+
+    /* Step 4: Sections with fluid spacing */
+    section {
+      min-height: 100dvh; /* respects visible height (ignores browser chrome) */
+      padding: clamp(2rem, 5vw, 6rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: calc(var(--space-2) * 2) calc(var(--space-3) * 2);
+      font-size: clamp(0.875rem, 1vw + 0.25rem, 1.25rem);
+      background: #0077ff;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <section>
+    <h1>Fluid Design Demo</h1>
+    <p>
+      Resize the window back and forth — fonts and spacing scale smoothly without breakpoints.
+      Works for both width and height changes.
+    </p>
+    <button class="btn">Click Me</button>
+  </section>
+
+  <section>
+    <h1>Another Section</h1>
+    <p>
+      Notice how spacing, padding, and font sizes adapt across any screen size.
+      This mimics the Figma design but stays responsive globally.
+    </p>
+    <button class="btn">Try Again</button>
+  </section>
+
+</body>
+</html>
