@@ -32,53 +32,57 @@ sections.forEach((section) => observer.observe(section));
 
 //Materials:
 document.addEventListener("DOMContentLoaded", () => {
+  // Study Materials:
   const gallery = document.querySelector(".materials-gallery");
   const items = Array.from(gallery.querySelectorAll(".materials-sub"));
   const toggle = document.querySelector(".materials-footer");
-  const VISIBLE_COUNT = 4;
+  const toggleBtns = document.querySelectorAll(".materials-toggle .toggle-btn");
 
   if (!gallery || items.length === 0 || !toggle) return;
 
-  // Make the footer keyboard-accessible if it's not a button
   toggle.tabIndex = toggle.tabIndex || 0;
   toggle.setAttribute("role", "button");
   toggle.style.cursor = "pointer";
 
-  // compute heights based on current layout
+  const getVisibleCount = () => {
+    if (window.innerWidth <= 576) return 4; // mobile
+    if (window.innerWidth <= 768) return 4; // tablet
+    return 4; // desktop
+  };
+
+  let VISIBLE_COUNT = getVisibleCount();
+
   function computeHeights(visibleCount) {
-    // ensure layout is up to date
-    // visibleCount should be >=1
+    const visibleItems = items.filter(item => item.style.display !== "none");
+
+    if (visibleItems.length === 0) return { visibleHeight: 0, fullHeight: 0 };
+
     const topRect = gallery.getBoundingClientRect();
-    // clamp
-    const vc = Math.min(Math.max(visibleCount, 1), items.length);
 
-    // bottom coord of the last visible item (relative to viewport)
-    const lastVisibleRect = items[vc - 1].getBoundingClientRect();
-    const visibleHeight = Math.ceil(lastVisibleRect.bottom - topRect.top);
+    const vc = Math.min(Math.max(visibleCount, 1), visibleItems.length);
 
-    // bottom coord of the very last item (all items)
-    const lastRect = items[items.length - 1].getBoundingClientRect();
-    const fullHeight = Math.ceil(lastRect.bottom - topRect.top);
+    const lastVisibleRect = visibleItems[vc - 1].getBoundingClientRect();
+    let visibleHeight = Math.ceil(lastVisibleRect.bottom - topRect.top);
 
-    // In some edge cases where images or fonts are still loading, heights might be tiny.
-    // We return at least 0.
+    const lastRect = visibleItems[visibleItems.length - 1].getBoundingClientRect();
+    let fullHeight = Math.ceil(lastRect.bottom - topRect.top);
+
+    const BUFFER = 40; // tweak if needed
     return {
-      visibleHeight: Math.max(0, visibleHeight),
-      fullHeight: Math.max(0, fullHeight),
+      visibleHeight: Math.max(0, visibleHeight + BUFFER),
+      fullHeight: Math.max(0, fullHeight + BUFFER),
     };
   }
 
-  // apply collapsed state (only first VISIBLE_COUNT items visible)
   function applyCollapsed(animate = true) {
     const { visibleHeight } = computeHeights(VISIBLE_COUNT);
-    // if animate is false, temporarily disable transition
     if (!animate) {
       const prev = gallery.style.transition;
       gallery.style.transition = "none";
       gallery.style.maxHeight = visibleHeight + "px";
-      // force layout then restore transition
       requestAnimationFrame(() => {
-        gallery.style.transition = prev || "max-height 420ms cubic-bezier(.22,.9,.32,1)";
+        gallery.style.transition =
+          prev || "max-height 420ms cubic-bezier(.22,.9,.32,1)";
       });
     } else {
       gallery.style.maxHeight = visibleHeight + "px";
@@ -87,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
     toggle.textContent = "View More";
   }
 
-  // apply expanded state (show all items)
   function applyExpanded() {
     const { fullHeight } = computeHeights(items.length);
     gallery.style.maxHeight = fullHeight + "px";
@@ -95,75 +98,80 @@ document.addEventListener("DOMContentLoaded", () => {
     toggle.textContent = "View Less";
   }
 
-  // Init: on full page load we measure after images/fonts are ready
   function init() {
-    // If there are less or equal items than visible, don't show the toggle
     if (items.length <= VISIBLE_COUNT) {
       toggle.style.display = "none";
-      // ensure gallery fits content
-      gallery.style.maxHeight = ""; // let content define height
+      gallery.style.maxHeight = "";
       return;
     }
-
-    // Start collapsed
     applyCollapsed(false);
   }
 
-  // toggle click / keyboard
-  function toggleHandler() {
-    if (gallery.classList.contains("expanded")) {
-      applyCollapsed();
+  window.addEventListener("load", () => {
+    init();
+    requestAnimationFrame(() => applyCollapsed(false));
+  });
+
+  window.addEventListener("resize", () => {
+    VISIBLE_COUNT = getVisibleCount();
+    if (!gallery.classList.contains("expanded")) {
+      applyCollapsed(false);
     } else {
       applyExpanded();
-      // ensure we scroll to reveal area for small screens if user expects it
-      // optional: uncomment next line to auto-scroll the gallery into view on expand
-      // gallery.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-  }
-
-  toggle.addEventListener("click", toggleHandler);
-  toggle.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      toggleHandler();
     }
   });
 
-  // Recompute sizes on resize + when images inside the gallery load
-  let resizeTimer;
-  window.addEventListener("resize", () => {
-    // debounce resize
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
+  toggle.addEventListener("click", () => {
+    if (gallery.classList.contains("expanded")) {
+      applyCollapsed();
+
+      setTimeout(() => {
+        const target = document.querySelector("#Materials");
+        const navbar = document.querySelector(".navbar");
+        const navbarHeight = navbar ? navbar.offsetHeight : 0;
+
+        const sectionTop = target.getBoundingClientRect().top + window.scrollY;
+
+        window.scrollTo({
+          top: sectionTop - navbarHeight,
+          behavior: "smooth"
+        });
+      }, 450);
+    } else {
+      applyExpanded();
+    }
+  });
+
+  // ✅ Filtering Logic
+  toggleBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      // Set active state
+      toggleBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const type = btn.getAttribute("data-type");
+
+      // Show only matching items
+      items.forEach(item => {
+        if (item.dataset.type === type) {
+          item.style.display = "flex"; // restore
+        } else {
+          item.style.display = "none"; // hide
+        }
+      });
+
+      // Re-run collapse/expand height logic
       if (gallery.classList.contains("expanded")) {
         applyExpanded();
       } else {
-        applyCollapsed();
+        applyCollapsed(false);
       }
-    }, 100);
+    });
   });
 
-  // re-run sizes when any image loads (handles images that change row heights)
-  const imgs = gallery.querySelectorAll("img");
-  imgs.forEach(img => {
-    if (!img.complete) {
-      img.addEventListener("load", () => {
-        // small delay to ensure layout settled
-        setTimeout(() => {
-          if (gallery.classList.contains("expanded")) applyExpanded();
-          else applyCollapsed();
-        }, 40);
-      });
-    }
-  });
-
-  // Run init on window load (images/fonts settled)
-  window.addEventListener("load", init);
-  // also call init after DOMContent if load might not fire (safety)
-  setTimeout(() => {
-    if (!gallery.style.maxHeight) init();
-  }, 300);
+  init();
 });
+
 
 
 
