@@ -29,14 +29,12 @@ const observer = new IntersectionObserver(
 
 sections.forEach((section) => observer.observe(section));
 
-
 //Materials:
+// Materials:
 document.addEventListener("DOMContentLoaded", () => {
-  // Study Materials:
   const gallery = document.querySelector(".materials-gallery");
   const items = Array.from(gallery.querySelectorAll(".materials-sub"));
   const toggle = document.querySelector(".materials-footer");
-  const toggleBtns = document.querySelectorAll(".materials-toggle .toggle-btn");
 
   if (!gallery || items.length === 0 || !toggle) return;
 
@@ -53,18 +51,14 @@ document.addEventListener("DOMContentLoaded", () => {
   let VISIBLE_COUNT = getVisibleCount();
 
   function computeHeights(visibleCount) {
-    const visibleItems = items.filter(item => item.style.display !== "none");
-
-    if (visibleItems.length === 0) return { visibleHeight: 0, fullHeight: 0 };
-
     const topRect = gallery.getBoundingClientRect();
 
-    const vc = Math.min(Math.max(visibleCount, 1), visibleItems.length);
+    const vc = Math.min(Math.max(visibleCount, 1), items.length);
 
-    const lastVisibleRect = visibleItems[vc - 1].getBoundingClientRect();
+    const lastVisibleRect = items[vc - 1].getBoundingClientRect();
     let visibleHeight = Math.ceil(lastVisibleRect.bottom - topRect.top);
 
-    const lastRect = visibleItems[visibleItems.length - 1].getBoundingClientRect();
+    const lastRect = items[items.length - 1].getBoundingClientRect();
     let fullHeight = Math.ceil(lastRect.bottom - topRect.top);
 
     const BUFFER = 40; // tweak if needed
@@ -104,14 +98,17 @@ document.addEventListener("DOMContentLoaded", () => {
       gallery.style.maxHeight = "";
       return;
     }
+
+    // ✅ Start collapsed (show only limited books)
     applyCollapsed(false);
   }
 
+  // Load
   window.addEventListener("load", () => {
     init();
-    requestAnimationFrame(() => applyCollapsed(false));
   });
 
+  // Resize handling
   window.addEventListener("resize", () => {
     VISIBLE_COUNT = getVisibleCount();
     if (!gallery.classList.contains("expanded")) {
@@ -121,58 +118,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Toggle click
   toggle.addEventListener("click", () => {
     if (gallery.classList.contains("expanded")) {
-      applyCollapsed();
+      // Scroll first
+      const target = document.querySelector("#Materials");
+      const navbar = document.querySelector(".navbar");
+      const navbarHeight = navbar ? navbar.offsetHeight : 0;
 
+      const sectionTop = target.getBoundingClientRect().top + window.scrollY;
+
+      window.scrollTo({
+        top: sectionTop - navbarHeight,
+        behavior: "smooth"
+      });
+
+      // Then collapse after short delay
       setTimeout(() => {
-        const target = document.querySelector("#Materials");
-        const navbar = document.querySelector(".navbar");
-        const navbarHeight = navbar ? navbar.offsetHeight : 0;
-
-        const sectionTop = target.getBoundingClientRect().top + window.scrollY;
-
-        window.scrollTo({
-          top: sectionTop - navbarHeight,
-          behavior: "smooth"
-        });
-      }, 450);
+        applyCollapsed();
+      }, 500);
     } else {
       applyExpanded();
     }
   });
-
-  // ✅ Filtering Logic
-  toggleBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      // Set active state
-      toggleBtns.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      const type = btn.getAttribute("data-type");
-
-      // Show only matching items
-      items.forEach(item => {
-        if (item.dataset.type === type) {
-          item.style.display = "flex"; // restore
-        } else {
-          item.style.display = "none"; // hide
-        }
-      });
-
-      // Re-run collapse/expand height logic
-      if (gallery.classList.contains("expanded")) {
-        applyExpanded();
-      } else {
-        applyCollapsed(false);
-      }
-    });
-  });
-
-  init();
 });
-
-
 
 
 
