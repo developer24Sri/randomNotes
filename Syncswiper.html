@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Four Synchronized Swipers</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    .swiper {
+      width: 100%;
+      margin: 20px auto;
+    }
+    .swiper-slide {
+      background: #444;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      height: 120px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- 1st Swiper -->
+  <div class="swiper swiper-1">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">Slide 1</div>
+      <div class="swiper-slide">Slide 2</div>
+      <div class="swiper-slide">Slide 3</div>
+      <div class="swiper-slide">Slide 4</div>
+      <div class="swiper-slide">Slide 5</div>
+      <div class="swiper-slide">Slide 6</div>
+      <div class="swiper-slide">Slide 7</div>
+    </div>
+  </div>
+
+  <!-- 2nd Swiper -->
+  <div class="swiper swiper-2">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">S2-1</div>
+      <div class="swiper-slide">S2-2</div>
+      <div class="swiper-slide">S2-3</div>
+      <div class="swiper-slide">S2-4</div>
+    </div>
+  </div>
+
+  <!-- 3rd Swiper -->
+  <div class="swiper swiper-3">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">S3-1</div>
+      <div class="swiper-slide">S3-2</div>
+      <div class="swiper-slide">S3-3</div>
+      <div class="swiper-slide">S3-4</div>
+    </div>
+  </div>
+
+  <!-- 4th Swiper -->
+  <div class="swiper swiper-4">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">S4-1</div>
+      <div class="swiper-slide">S4-2</div>
+      <div class="swiper-slide">S4-3</div>
+      <div class="swiper-slide">S4-4</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    // Create all swipers
+    const swiper1 = new Swiper(".swiper-1", {
+      slidesPerView: 5,
+      loop: true,
+      allowTouchMove: false,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      }
+    });
+
+    const swiper2 = new Swiper(".swiper-2", {
+      slidesPerView: 1,
+      loop: true,
+      allowTouchMove: false,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      }
+    });
+
+    const swiper3 = new Swiper(".swiper-3", {
+      slidesPerView: 1,
+      loop: true,
+      allowTouchMove: false,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      }
+    });
+
+    const swiper4 = new Swiper(".swiper-4", {
+      slidesPerView: 1,
+      loop: true,
+      allowTouchMove: false,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      }
+    });
+
+    // Sync all swipers
+    const swipers = [swiper1, swiper2, swiper3, swiper4];
+
+    swipers.forEach((swiper, i) => {
+      swiper.on("slideChangeTransitionStart", () => {
+        swipers.forEach((s, j) => {
+          if (i !== j) {
+            s.slideToLoop(swiper.realIndex);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
