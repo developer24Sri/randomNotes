@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Company Locations</title>
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    crossorigin=""
+  />
+  <style>
+    body { margin:0; }
+    #map { width:100%; height:100vh; }
+  </style>
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script>
+    // Create map centered roughly between both locations
+    const map = L.map('map').setView([12.9, 80.15], 11);
+
+    // Add OSM tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Locations
+    const locations = [
+      {
+        name: "Admin Office",
+        coords: [13.0053, 80.0917], // Kundrathur, Chennai
+        gmap: "https://maps.google.com/?q=13.0053,80.0917"
+      },
+      {
+        name: "Main Office",
+        coords: [12.9206, 80.2463], // Injambakkam, Chennai
+        gmap: "https://maps.google.com/?q=12.9206,80.2463"
+      }
+    ];
+
+    // Add markers
+    locations.forEach(loc => {
+      L.marker(loc.coords)
+        .addTo(map)
+        .bindPopup(`<b>${loc.name}</b><br><a href="${loc.gmap}" target="_blank">Open in Google Maps</a>`)
+        .on("click", () => window.open(loc.gmap, "_blank"));
+    });
+  </script>
+</body>
+</html>
