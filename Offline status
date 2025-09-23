@@ -1,0 +1,95 @@
+import React, { useEffect } from "react";
+import { useLocation, Outlet } from "react-router-dom";
+import { useOnlineStatus } from "../hooks/useOnlineStatus";
+
+interface RouteGuardProps {
+  setLastPath: (path: string) => void;
+}
+
+const RouteGuard: React.FC<RouteGuardProps> = ({ setLastPath }) => {
+  const location = useLocation();
+  const isOnline = useOnlineStatus();
+
+  useEffect(() => {
+    if (isOnline) {
+      // Store the intended path when online
+      setLastPath(location.pathname);
+    }
+  }, [isOnline, location, setLastPath]);
+
+  return <Outlet />;
+};
+
+export default RouteGuard;
+
+import React, { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useOnlineStatus } from "./hooks/useOnlineStatus";
+import NoInternetPage from "./pages/NoInternetPage";
+import BookStoreHome from "./pages/BookStoreHome";
+import MyBooks from "./pages/MyBooks";
+import AllBooks from "./pages/AllBooks";
+import RouteGuard from "./components/RouteGuard";
+
+const App: React.FC = () => {
+  const isOnline = useOnlineStatus();
+  const [lastPath, setLastPath] = useState("/");
+
+  return (
+    <BrowserRouter>
+      {isOnline ? (
+        <Routes>
+          <Route element={<RouteGuard setLastPath={setLastPath} />}>
+            <Route path="/" element={<BookStoreHome />} />
+            <Route path="/all" element={<AllBooks />} />
+            <Route path="/my-books" element={<MyBooks />} />
+          </Route>
+        </Routes>
+      ) : (
+        <NoInternetPage lastPath={lastPath} />
+      )}
+    </BrowserRouter>
+  );
+};
+
+export default App;
+
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import NoInternetImg from "../assets/no-internet.png";
+import { useOnlineStatus } from "../hooks/useOnlineStatus";
+
+interface Props {
+  lastPath: string;
+}
+
+const NoInternetPage: React.FC<Props> = ({ lastPath }) => {
+  const navigate = useNavigate();
+  const isOnline = useOnlineStatus();
+
+  const handleRetry = () => {
+    if (isOnline) {
+      navigate(lastPath, { replace: true });
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 text-center p-4">
+      <img src={NoInternetImg} alt="No Internet" className="w-64 h-auto mb-6" />
+      <h1 className="text-2xl font-bold text-gray-800 mb-2">
+        No Internet Connection
+      </h1>
+      <p className="text-gray-600 mb-4">
+        You were trying to access <strong>{lastPath}</strong>.
+      </p>
+      <button
+        onClick={handleRetry}
+        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+      >
+        Try Again
+      </button>
+    </div>
+  );
+};
+
+export default NoInternetPage;
