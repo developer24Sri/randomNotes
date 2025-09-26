@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visitor Count</title>
+</head>
+<body>
+  <h1>Visitor Count:</h1>
+  <div id="status">-</div>
+
+  <script>
+    // Helper to set cache with TTL (-1 = never expire)
+    function setCache(key, value, ttl) {
+      const data = {
+        value,
+        expiry: ttl === -1 ? -1 : Date.now() + ttl,
+      };
+      localStorage.setItem(key, JSON.stringify(data));
+    }
+
+    // Helper to get cache with TTL check
+    function getCache(key) {
+      const cached = localStorage.getItem(key);
+      if (!cached) return null;
+
+      const parsed = JSON.parse(cached);
+
+      // if expiry = -1 → permanent
+      if (parsed.expiry === -1) return parsed.value;
+
+      // check if expired
+      if (Date.now() > parsed.expiry) {
+        localStorage.removeItem(key);
+        return null;
+      }
+
+      return parsed.value;
+    }
+
+    async function fetchVisitorCount() {
+      const statusEl = document.getElementById("status");
+
+      // check cache first
+      const cached = getCache("visitorCount");
+      if (cached !== null) {
+        statusEl.textContent = cached;
+        return; // skip API call
+      }
+
+      try {
+        const response = await fetch("https://api.example.com/visitor-count", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ one: 1 }),
+        });
+
+        const data = await response.json();
+        const count = data?.count ?? "-";
+
+        // store permanently
+        setCache("visitorCount", count, -1);
+
+        statusEl.textContent = count;
+      } catch {
+        statusEl.textContent = "-";
+      }
+    }
+
+    // Run on page load
+    fetchVisitorCount();
+  </script>
+</body>
+</html>
