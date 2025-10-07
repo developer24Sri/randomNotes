@@ -1,7 +1,5 @@
-const TOTAL_SLIDES = 8;        // make sure each swiper actually has 8 slides
 const TRANSITION_MS = 800;
 
-// Tab
 const swiperTab = new Swiper(".TabSwiper", {
   slidesPerView: 1,
   loop: true,
@@ -9,7 +7,6 @@ const swiperTab = new Swiper(".TabSwiper", {
   allowTouchMove: false,
 });
 
-// Desktop
 const swiperDesktop = new Swiper(".DesktopSwiper", {
   slidesPerView: 1,
   loop: true,
@@ -17,7 +14,6 @@ const swiperDesktop = new Swiper(".DesktopSwiper", {
   allowTouchMove: false,
 });
 
-// Mobile
 const swiperMobile = new Swiper(".MobileSwiper", {
   slidesPerView: 1,
   loop: true,
@@ -25,11 +21,10 @@ const swiperMobile = new Swiper(".MobileSwiper", {
   allowTouchMove: false,
 });
 
-// Main Banner (master)
 const swiperBanner = new Swiper(".bannerSwiper", {
   slidesPerView: 5,
-  centeredSlides: true,
   loop: true,
+  loopAdditionalSlides: 1, // ✅ fixes gaps
   speed: TRANSITION_MS,
   autoplay: {
     delay: 3000,
@@ -39,18 +34,17 @@ const swiperBanner = new Swiper(".bannerSwiper", {
   simulateTouch: false,
 });
 
-// --- IMPORTANT: remove your old realIndexChange handler ---
+// ✅ derive real total slides dynamically
+const TOTAL_SLIDES =
+  swiperBanner.slides.length - swiperBanner.loopedSlides * 2;
 
-// Smooth sync by stepping slaves in the same direction as the master.
-// This avoids any jump-to-first/last at loop boundaries.
 let prevReal = swiperBanner.realIndex;
 
 swiperBanner.on("slideChangeTransitionStart", () => {
   const nextReal = swiperBanner.realIndex;
 
-  // Compute forward/back step (mod TOTAL_SLIDES) to handle loop wrap (e.g., 7 -> 0)
   const forward = (nextReal - prevReal + TOTAL_SLIDES) % TOTAL_SLIDES;
-  const direction = forward === 1 ? "next" : "prev"; // autoplay advances by exactly 1
+  const direction = forward === 1 ? "next" : "prev";
 
   if (direction === "next") {
     swiperTab.slideNext(TRANSITION_MS);

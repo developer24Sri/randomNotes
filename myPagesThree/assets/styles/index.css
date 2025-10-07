@@ -341,9 +341,12 @@
 
     }
 
+
     #homepage-wrapper .banner .banner-slides .bannerSwiper .swiper-wrapper .swiper-slide {
         justify-content: center;
         height: 80%;
+          flex: 0 0 auto;   /* ✅ ensures no shrinking */
+  width: calc(100% / 5); /* exactly 5 visible */
     }
 
     #homepage-wrapper .banner .banner-slides .bannerSwiper .swiper-wrapper .swiper-slide.swiper-slide-prev {
