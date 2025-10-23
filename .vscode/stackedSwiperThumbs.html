@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vertical Thumb Slider</title>
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .service-section {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .main-slider {
+            width: 65%;
+            height: 500px;
+        }
+
+        .main-slider .slide-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .nav-buttons {
+            width: 7%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .swiper-button-prev,
+        .swiper-button-next {
+            position: relative;
+            color: #fff;
+        }
+
+        .thumbs-slider {
+            width: 28%;
+            height: 500px;
+
+        }
+
+        .thumbs-slider .swiper-slide {
+            transition: transform 0.4s ease-in-out;
+  transform: translateY(0);
+        }
+
+        .thumb-slider.active {
+  opacity: 1;
+  transform: translateY(-10px);
+  z-index: 5;
+}
+.thumb-slider.fade-out {
+  opacity: 0;
+  transform: translateY(-20px);
+  z-index: 1;
+}
+
+        .thumb-content {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .thumb-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+        }
+
+
+        .thumbs-slider .swiper-slide {
+            transform: translate(0, 0);
+        }
+
+        .thumbs-slider .swiper-slide-thumb-active {
+            transform: translate(0, 0) scale(1.05);
+            z-index: 10;
+        }
+
+        /* 🧱 Overlapping stacked style */
+        .thumbs-slider .swiper-slide:nth-child(1) {
+            transform: translateX(0px) translateY(0px);
+            z-index: 1;
+        }
+
+        .thumbs-slider .swiper-slide:nth-child(2) {
+            transform: translateX(10px) translateY(-20px);
+            z-index: 2;
+        }
+
+        .thumbs-slider .swiper-slide:nth-child(3) {
+            transform: translateX(20px) translateY(-40px);
+            z-index: 3;
+        }
+
+        .thumbs-slider .swiper-slide:nth-child(4) {
+            transform: translateX(30px) translateY(-60px);
+            z-index: 4;
+        }
+
+
+        /* When active thumb — bring to front & scale */
+        .thumbs-slider .swiper-slide-thumb-active {
+            transform: translateX(0px) translateY(0px) scale(1.05);
+            z-index: 10;
+            transition: transform 0.4s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="service-section">
+        <div class="swiper main-slider">
+            <div class="swiper-wrapper">
+                <!-- 5 main slides -->
+                <div class="swiper-slide">
+                    <div class="slide-content"><img src="https://picsum.photos/800/500?1" alt="" /></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="slide-content"><img src="https://picsum.photos/800/500?2" alt="" /></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="slide-content"><img src="https://picsum.photos/800/500?3" alt="" /></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="slide-content"><img src="https://picsum.photos/800/500?4" alt="" /></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="slide-content"><img src="https://picsum.photos/800/500?5" alt="" /></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-buttons">
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+
+        <!-- Thumbs -->
+        <div class="swiper thumbs-slider">
+            <div class="swiper-wrapper">
+                <!-- 5 thumbs -->
+                <div class="swiper-slide">
+                    <div class="thumb-content"><img src="https://picsum.photos/200/150?1" alt="" /></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="thumb-content"><img src="https://picsum.photos/200/150?2" alt="" /></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="thumb-content"><img src="https://picsum.photos/200/150?3" alt="" /></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="thumb-content"><img src="https://picsum.photos/200/150?4" alt="" /></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="thumb-content"><img src="https://picsum.photos/200/150?5" alt="" /></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+    <script>
+       // 🧭 Thumbs Swiper
+const thumbs = new Swiper('.thumbs-slider', {
+  direction: 'vertical',
+  slidesPerView: 4,
+  speed: 600,
+  loop: true,
+  loopedSlides: 5,
+  loopedSlidesLimit: true,
+  on: {
+    setTranslate: updateThumbStack,
+    slideChangeTransitionEnd: updateThumbStack,
+  },
+});
+
+// 🧭 Main Swiper
+const main = new Swiper('.main-slider', {
+  effect: 'fade',
+  fadeEffect: { crossFade: true },
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+  loop: true,
+  loopedSlides: 5,
+  thumbs: {
+    swiper: thumbs,
+  },
+  speed: 800,
+});
+
+// 🧠 Dynamic stacked transform logic
+function updateThumbStack() {
+  const slides = document.querySelectorAll('.thumbs-slider .swiper-slide');
+
+  // Reset transforms first
+  slides.forEach((slide, index) => {
+    slide.style.zIndex = slides.length - index;
+    slide.style.transform = 'translate(0, 0)';
+    slide.style.opacity = '1';
+  });
+
+  // Collect visible slides only
+  const visibleSlides = [...slides].filter(s => s.classList.contains('swiper-slide-visible'));
+
+  visibleSlides.forEach((slide, i) => {
+    if (i === 0 || i === visibleSlides.length - 1) {
+      // First & last visible slides → no transform (smooth entry/exit)
+      slide.style.transform = 'translate(0, 0)';
+      slide.style.opacity = '0.8';
+    } else {
+      // Middle slides → stacked look
+      slide.style.transform = `translateX(${i * 10}px) translateY(-${i * 20}px)`;
+      slide.style.transition = 'transform 0.4s ease-in-out, opacity 0.4s ease-in-out';
+      slide.style.opacity = '1';
+    }
+  });
+}
+
+// ✨ Animate thumbs on main slide change
+main.on('slideChangeTransitionStart', () => {
+  const thumbSlides = document.querySelectorAll('.thumbs-slider .swiper-slide-visible');
+
+  if (thumbSlides.length > 0) {
+    // Fade out first visible
+    thumbSlides[0].style.opacity = '0';
+    thumbSlides[0].style.transition = 'opacity 0.4s ease';
+  }
+
+  // Trigger re-stacking after fade
+  setTimeout(updateThumbStack, 400);
+});
+
+// 🔁 Ensure main and thumbs control each other
+main.controller.control = thumbs;
+thumbs.controller.control = main;
+
+// 🪄 Initial stack setup
+setTimeout(updateThumbStack, 100);
+
+    </script>
+</body>
+
+</html>
