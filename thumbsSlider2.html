@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Synced Vertical Thumbs with Animation</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .service-section {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .main-slider {
+      width: 65%;
+      height: 500px;
+    }
+
+    .main-slider .slide-content img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .nav-buttons {
+      width: 7%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+      gap: 1rem;
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next {
+      position: relative;
+      color: #fff;
+    }
+
+    .thumbs-slider {
+      width: 28%;
+      height: 500px;
+      position: relative;
+    }
+
+    .thumbs-slider .swiper-slide {
+      opacity: 0.6;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .thumbs-slider .swiper-slide-thumb-active {
+      opacity: 1;
+      transform: scale(1.05);
+      z-index: 10;
+    }
+
+    /* stacking visual style */
+    .thumbs-slider .swiper-slide {
+      transform: translateY(0);
+    }
+
+    .thumb-content img {
+      width: 100%;
+      border-radius: 10px;
+      display: block;
+    }
+
+    /* For smoother stacking visuals */
+.thumb-active {
+  opacity: 1;
+  transform: translateX(0px) translateY(0px);
+  z-index: 10;
+}
+
+.thumb-enter {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.thumb-exit {
+  opacity: 0;
+  transform: translateY(-50px);
+}
+
+
+    .fade-out {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+  </style>
+</head>
+<body>
+  <section class="service-section">
+    <!-- Main Slider -->
+    <div class="swiper main-slider">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><div class="slide-content"><img src="https://picsum.photos/800/500?1"></div></div>
+        <div class="swiper-slide"><div class="slide-content"><img src="https://picsum.photos/800/500?2"></div></div>
+        <div class="swiper-slide"><div class="slide-content"><img src="https://picsum.photos/800/500?3"></div></div>
+        <div class="swiper-slide"><div class="slide-content"><img src="https://picsum.photos/800/500?4"></div></div>
+        <div class="swiper-slide"><div class="slide-content"><img src="https://picsum.photos/800/500?5"></div></div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-buttons">
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+
+    <!-- Thumbs -->
+    <div class="swiper thumbs-slider">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><div class="thumb-content"><img src="https://picsum.photos/200/150?1"></div></div>
+        <div class="swiper-slide"><div class="thumb-content"><img src="https://picsum.photos/200/150?2"></div></div>
+        <div class="swiper-slide"><div class="thumb-content"><img src="https://picsum.photos/200/150?3"></div></div>
+        <div class="swiper-slide"><div class="thumb-content"><img src="https://picsum.photos/200/150?4"></div></div>
+        <div class="swiper-slide"><div class="thumb-content"><img src="https://picsum.photos/200/150?5"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+  <script>
+    // Thumbs Swiper
+  const thumbs = new Swiper(".thumbs-slider", {
+    direction: "vertical",
+    slidesPerView: 4,
+    speed: 500,
+    loop: true,
+    watchSlidesProgress: true,
+    watchSlidesVisibility: true,
+  });
+
+  // Main Swiper
+  const main = new Swiper(".main-slider", {
+    effect: "fade",
+    fadeEffect: { crossFade: true },
+    loop: true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    thumbs: { swiper: thumbs },
+  });
+
+  // Control movement manually to ensure visible thumb shift
+  main.on("slideNextTransitionStart", () => thumbs.slideNext());
+  main.on("slidePrevTransitionStart", () => thumbs.slidePrev());
+
+  // Function to restack thumbs visually
+  function updateThumbStack() {
+    const slides = document.querySelectorAll(".thumbs-slider .swiper-slide-visible");
+    slides.forEach((slide, i) => {
+      slide.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+      slide.style.zIndex = slides.length - i;
+      if (i === 0) {
+        slide.style.transform = "translateX(0px) translateY(0px)";
+      } else {
+        slide.style.transform = `translateX(${i * 10}px) translateY(-${i * 20}px)`;
+      }
+    });
+  }
+
+  // Handle fade animations with direction
+  main.on("slideChangeTransitionStart", () => {
+    const visible = document.querySelectorAll(".thumbs-slider .swiper-slide-visible");
+    if (visible.length === 0) return;
+
+    const direction = main.swipeDirection; // "next" or "prev"
+    visible.forEach(s => s.classList.remove("thumb-active", "thumb-enter", "thumb-exit"));
+
+    const exitingThumb = visible[0];
+    const incomingThumb = visible[1];
+
+    if (exitingThumb) {
+      exitingThumb.classList.add(direction === "next" ? "thumb-exit" : "thumb-enter");
+    }
+
+    if (incomingThumb) {
+      incomingThumb.classList.add(direction === "next" ? "thumb-enter" : "thumb-exit");
+      setTimeout(() => {
+        incomingThumb.classList.remove("thumb-enter", "thumb-exit");
+        incomingThumb.classList.add("thumb-active");
+        updateThumbStack();
+      }, 400);
+    }
+  });
+
+  // Initial setup
+  updateThumbStack();
+
+  </script>
+</body>
+</html>
